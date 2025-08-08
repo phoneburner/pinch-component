@@ -1,4 +1,4 @@
-# [READ ONLY] Pinch Framework - Components Library
+# [READ ONLY] Pinch Framework: Components Library
 
 > **Note:** This repository is a **read-only** subtree split of
 > the [Pinch Framework monorepo](https://github.com/phoneburner/pinch). Please submit issues and pull requests
