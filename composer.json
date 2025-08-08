@@ -35,7 +35,7 @@
     "nesbot/carbon": "^2.73.0 || ^3.10.1",
     "phoneburner/http-tortilla": "^2.0.0",
     "phoneburner/link-tortilla": "^1.0.0",
-    "phoneburner/pinch-core": "^0.0.14",
+    "phoneburner/pinch-core": "^0.0.15",
     "psr/cache": "^3.0.0",
     "psr/clock": "^1.0.0",
     "psr/container": "^1.1.2 || ^2.0.2",
@@ -53,7 +53,7 @@
   },
   "require-dev": {
     "phoneburner/composer-replacements": "^1.0.0",
-    "phoneburner/pinch-phpstan": "^0.0.14",
+    "phoneburner/pinch-phpstan": "^0.0.15",
     "php-parallel-lint/php-parallel-lint": "^1.4",
     "phpunit/phpunit": "^12.2.7"
   },
