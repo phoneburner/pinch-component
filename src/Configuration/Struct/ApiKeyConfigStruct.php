@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace PhoneBurner\Pinch\Component\Configuration\Struct;
 
 use PhoneBurner\Pinch\Component\Configuration\ConfigStruct;
-use PhoneBurner\Pinch\Type\Cast\NonEmptyNullableCast;
+
+use function PhoneBurner\Pinch\Type\cast_nullable_nonempty_string;
 
 /**
  * General purpose configuration struct for something like an API key, enforcing
@@ -23,6 +24,6 @@ abstract readonly class ApiKeyConfigStruct implements ConfigStruct
 
     public function __construct(#[\SensitiveParameter] string|null $api_key)
     {
-        $this->api_key = NonEmptyNullableCast::string($api_key);
+        $this->api_key = cast_nullable_nonempty_string($api_key);
     }
 }

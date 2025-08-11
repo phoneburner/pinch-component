@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace PhoneBurner\Pinch\Component\Cache\Lock;
 
 use PhoneBurner\Pinch\Attribute\Usage\Contract;
-use PhoneBurner\Pinch\Time\TimeInterval\TimeInterval;
+use PhoneBurner\Pinch\Time\Interval\TimeInterval;
 
 #[Contract]
 interface Lock

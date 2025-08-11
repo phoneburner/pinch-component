@@ -7,7 +7,7 @@ namespace PhoneBurner\Pinch\Component\Tests\Http\Response;
 use PhoneBurner\Pinch\Component\Http\Domain\HttpHeader;
 use PhoneBurner\Pinch\Component\Http\Domain\HttpStatus;
 use PhoneBurner\Pinch\Component\Http\Response\ServerSentEventsResponse;
-use PhoneBurner\Pinch\Time\TimeInterval\TimeInterval;
+use PhoneBurner\Pinch\Time\Interval\TimeInterval;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

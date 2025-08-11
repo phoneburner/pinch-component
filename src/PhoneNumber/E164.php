@@ -120,7 +120,7 @@ final readonly class E164 implements
     }
 
     #[\Override]
-    public function getValue(): self
+    public function getPhoneNumber(): self
     {
         return $this;
     }

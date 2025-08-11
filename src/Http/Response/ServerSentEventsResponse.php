@@ -9,7 +9,7 @@ use PhoneBurner\Pinch\Component\Http\Domain\ContentType;
 use PhoneBurner\Pinch\Component\Http\Domain\HttpHeader;
 use PhoneBurner\Pinch\Component\Http\Domain\HttpStatus;
 use PhoneBurner\Pinch\Component\Http\Stream\IteratorStream;
-use PhoneBurner\Pinch\Time\TimeInterval\TimeInterval;
+use PhoneBurner\Pinch\Time\Interval\TimeInterval;
 
 use const PhoneBurner\Pinch\Time\SECONDS_IN_MINUTE;
 

@@ -11,7 +11,7 @@ use PhoneBurner\Pinch\Component\Cache\CacheKey;
 use PhoneBurner\Pinch\Component\Cache\Exception\CacheWriteFailed;
 use PhoneBurner\Pinch\Component\Cache\Psr6\InMemoryCachePool;
 use PhoneBurner\Pinch\Time\Clock\StaticClock;
-use PhoneBurner\Pinch\Time\TimeInterval\TimeInterval;
+use PhoneBurner\Pinch\Time\Interval\TimeInterval;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

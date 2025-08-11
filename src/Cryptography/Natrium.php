@@ -29,7 +29,7 @@ use PhoneBurner\Pinch\Random\Randomizer;
 use PhoneBurner\Pinch\String\BinaryString\BinaryString;
 use PhoneBurner\Pinch\Time\Clock\Clock;
 use PhoneBurner\Pinch\Time\Clock\SystemClock;
-use PhoneBurner\Pinch\Time\TimeInterval\TimeInterval;
+use PhoneBurner\Pinch\Time\Interval\TimeInterval;
 
 use function PhoneBurner\Pinch\String\bytes;
 

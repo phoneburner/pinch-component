@@ -15,7 +15,7 @@ final class NullPhoneNumberTest extends TestCase
     {
         $sut = NullPhoneNumber::make();
         self::assertNull($sut->toE164());
-        self::assertSame($sut, $sut->getValue());
+        self::assertSame($sut, $sut->getPhoneNumber());
         self::assertSame($sut, NullPhoneNumber::make());
     }
 }

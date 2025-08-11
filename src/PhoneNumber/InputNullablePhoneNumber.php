@@ -39,7 +39,7 @@ final readonly class InputNullablePhoneNumber implements
     }
 
     #[\Override]
-    public function getValue(): NullablePhoneNumber
+    public function getPhoneNumber(): NullablePhoneNumber
     {
         return $this;
     }

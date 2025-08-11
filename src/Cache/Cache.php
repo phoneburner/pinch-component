@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace PhoneBurner\Pinch\Component\Cache;
 
 use PhoneBurner\Pinch\Attribute\Usage\Contract;
-use PhoneBurner\Pinch\Time\TimeInterval\TimeInterval;
+use PhoneBurner\Pinch\Time\Interval\TimeInterval;
 
 /**
  * This is the primary interface for interacting with the cache, and should be

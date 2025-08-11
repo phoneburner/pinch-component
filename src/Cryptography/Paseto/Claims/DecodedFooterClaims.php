@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace PhoneBurner\Pinch\Component\Cryptography\Paseto\Claims;
 
 use PhoneBurner\Pinch\String\Encoding\Json;
-use PhoneBurner\Pinch\Type\Cast\NullableCast;
+
+use function PhoneBurner\Pinch\Type\cast_nullable_string;
 
 /**
  * @implements \ArrayAccess<string, mixed>
@@ -35,8 +36,8 @@ readonly class DecodedFooterClaims implements \ArrayAccess
         $claims = Json::decode($json_encoded_claims);
 
         return new self(
-            NullableCast::string($claims[RegisteredFooterClaim::KeyId->value] ?? null),
-            NullableCast::string($claims[RegisteredFooterClaim::WrappedPaserk->value] ?? null),
+            cast_nullable_string($claims[RegisteredFooterClaim::KeyId->value] ?? null),
+            cast_nullable_string($claims[RegisteredFooterClaim::WrappedPaserk->value] ?? null),
             $claims,
         );
     }

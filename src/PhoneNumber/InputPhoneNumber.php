@@ -39,7 +39,7 @@ final readonly class InputPhoneNumber implements
     }
 
     #[\Override]
-    public function getValue(): PhoneNumber
+    public function getPhoneNumber(): PhoneNumber
     {
         return $this;
     }

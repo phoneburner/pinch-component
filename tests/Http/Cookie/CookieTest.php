@@ -9,7 +9,7 @@ use PhoneBurner\Pinch\Component\Http\Cookie\Cookie;
 use PhoneBurner\Pinch\Component\Http\Cookie\SameSite;
 use PhoneBurner\Pinch\Component\Http\Domain\HttpHeader;
 use PhoneBurner\Pinch\Component\Http\Exception\InvalidCookie;
-use PhoneBurner\Pinch\Time\TimeInterval\TimeInterval;
+use PhoneBurner\Pinch\Time\Interval\TimeInterval;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

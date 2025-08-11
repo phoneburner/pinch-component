@@ -8,10 +8,12 @@ use PhoneBurner\Pinch\Component\Http\Domain\HttpStatus;
 use PhoneBurner\Pinch\Component\Http\Psr7;
 use PhoneBurner\Pinch\Component\Http\Response\RedirectResponse;
 use PhoneBurner\Pinch\Component\Http\Routing\Match\RouteMatch;
-use PhoneBurner\Pinch\Type\Cast\NullableCast;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+
+use function PhoneBurner\Pinch\Type\cast_nullable_int;
+use function PhoneBurner\Pinch\Type\cast_nullable_string;
 
 final class RedirectRequestHandler implements RequestHandlerInterface
 {
@@ -33,10 +35,10 @@ final class RedirectRequestHandler implements RequestHandlerInterface
         $route_match = Psr7::attribute(RouteMatch::class, $request)
             ?? throw new \LogicException('Request is Missing Required RouteMatch Attribute');
 
-        $uri = NullableCast::string($route_match->getAttributes()[self::URI] ?? null)
+        $uri = cast_nullable_string($route_match->getAttributes()[self::URI] ?? null)
             ?: throw new \LogicException('Request has Invalid Redirect URI');
 
-        $status_code = NullableCast::integer($route_match->getAttributes()[self::STATUS_CODE] ?? 0);
+        $status_code = cast_nullable_int($route_match->getAttributes()[self::STATUS_CODE] ?? 0);
         if (\in_array($status_code, self::ALLOWED_STATUS_CODES, true)) {
             return new RedirectResponse($uri, $status_code);
         }

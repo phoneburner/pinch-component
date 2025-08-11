@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace PhoneBurner\Pinch\Component\Cache;
 
 use PhoneBurner\Pinch\Attribute\Usage\Contract;
-use PhoneBurner\Pinch\Type\Cast\NullableCast;
 
 use function PhoneBurner\Pinch\String\str_snake;
+use function PhoneBurner\Pinch\Type\cast_nullable_string;
 
 /**
  * Creates a PSR-6/PSR-16 safe cache key "namespaced" by the passed in parts
@@ -26,7 +26,7 @@ readonly class CacheKey implements \Stringable
         $this->normalized = \implode('.', \array_map(static function (\Stringable|\BackedEnum|string|int $part): string {
             $part = \implode('.', \array_map(static function (string $subpart): string {
                 return str_snake(\str_replace(self::RESERVED_CHARACTERS, '_', $subpart));
-            }, \explode('.', \trim(NullableCast::string($part), '.'))));
+            }, \explode('.', \trim(cast_nullable_string($part), '.'))));
             return $part !== '' ? $part : throw new \InvalidArgumentException('Cache key part cannot be empty string');
         }, $key_parts));
     }

@@ -6,7 +6,7 @@ namespace PhoneBurner\Pinch\Component\Tests\Cache\Lock;
 
 use PhoneBurner\Pinch\Component\Cache\Lock\NullLock;
 use PhoneBurner\Pinch\Component\Cache\Lock\NullLockFactory;
-use PhoneBurner\Pinch\Time\TimeInterval\TimeInterval;
+use PhoneBurner\Pinch\Time\Interval\TimeInterval;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

@@ -46,7 +46,7 @@ final class E164Test extends TestCase
         }));
 
         self::assertSame($e164, $e164->toE164());
-        self::assertSame($e164, $e164->getValue());
+        self::assertSame($e164, $e164->getPhoneNumber());
     }
 
     #[DataProvider('providesInvalidTestCases')]

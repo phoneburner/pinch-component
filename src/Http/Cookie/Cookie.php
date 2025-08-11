@@ -8,7 +8,7 @@ use PhoneBurner\Pinch\Component\Http\Domain\HttpHeader;
 use PhoneBurner\Pinch\Component\Http\Exception\InvalidCookie;
 use PhoneBurner\Pinch\Time\Clock\Clock;
 use PhoneBurner\Pinch\Time\Clock\SystemClock;
-use PhoneBurner\Pinch\Time\TimeInterval\TimeInterval;
+use PhoneBurner\Pinch\Time\Interval\TimeInterval;
 use Psr\Http\Message\ResponseInterface;
 
 use function PhoneBurner\Pinch\Math\int_clamp;

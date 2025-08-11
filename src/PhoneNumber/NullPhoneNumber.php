@@ -22,7 +22,7 @@ final readonly class NullPhoneNumber implements NullablePhoneNumber, NullablePho
     }
 
     #[\Override]
-    public function getValue(): self
+    public function getPhoneNumber(): self
     {
         return $this;
     }

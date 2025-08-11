@@ -11,7 +11,7 @@ use PhoneBurner\Pinch\Component\Http\Routing\Route;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use function PhoneBurner\Pinch\Type\narrow_non_empty_string;
+use function PhoneBurner\Pinch\Type\narrow_nonempty_string;
 
 final class InMemoryDefinitionListTest extends TestCase
 {
@@ -84,7 +84,7 @@ final class InMemoryDefinitionListTest extends TestCase
     public function getNamedRouteReturnsRouteDefinition(): void
     {
         foreach ($this->expected_routes as $route) {
-            self::assertEquals($route, $this->sut->getNamedRoute(narrow_non_empty_string($route->getAttributes()[Route::class])));
+            self::assertEquals($route, $this->sut->getNamedRoute(narrow_nonempty_string($route->getAttributes()[Route::class])));
         }
     }
 
@@ -92,7 +92,7 @@ final class InMemoryDefinitionListTest extends TestCase
     public function hasNamedRouteReturnsTrueForExistingRoute(): void
     {
         foreach ($this->expected_routes as $route) {
-            self::assertTrue($this->sut->hasNamedRoute(narrow_non_empty_string($route->getAttributes()[Route::class])));
+            self::assertTrue($this->sut->hasNamedRoute(narrow_nonempty_string($route->getAttributes()[Route::class])));
         }
 
         self::assertFalse($this->sut->hasNamedRoute('not_a_route_that_exists'));

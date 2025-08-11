@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace PhoneBurner\Pinch\Component\Cryptography\Paseto\Claims;
 
 use PhoneBurner\Pinch\String\Encoding\Json;
-use PhoneBurner\Pinch\Type\Cast\NullableCast;
+
+use function PhoneBurner\Pinch\Type\cast_nullable_datetime;
+use function PhoneBurner\Pinch\Type\cast_nullable_string;
 
 /**
  * @implements \ArrayAccess<string, mixed>
@@ -36,13 +38,13 @@ readonly class DecodedPayloadClaims implements \ArrayAccess
         $claims = Json::decode($json_encoded_claims);
 
         return new self(
-            NullableCast::string($claims[RegisteredPayloadClaim::Issuer->value] ?? null),
-            NullableCast::string($claims[RegisteredPayloadClaim::Subject->value] ?? null),
-            NullableCast::string($claims[RegisteredPayloadClaim::Audience->value] ?? null),
-            NullableCast::string($claims[RegisteredPayloadClaim::TokenId->value] ?? null),
-            NullableCast::datetime($claims[RegisteredPayloadClaim::IssuedAt->value] ?? null),
-            NullableCast::datetime($claims[RegisteredPayloadClaim::Expiration->value] ?? null),
-            NullableCast::datetime($claims[RegisteredPayloadClaim::NotBefore->value] ?? null),
+            cast_nullable_string($claims[RegisteredPayloadClaim::Issuer->value] ?? null),
+            cast_nullable_string($claims[RegisteredPayloadClaim::Subject->value] ?? null),
+            cast_nullable_string($claims[RegisteredPayloadClaim::Audience->value] ?? null),
+            cast_nullable_string($claims[RegisteredPayloadClaim::TokenId->value] ?? null),
+            cast_nullable_datetime($claims[RegisteredPayloadClaim::IssuedAt->value] ?? null),
+            cast_nullable_datetime($claims[RegisteredPayloadClaim::Expiration->value] ?? null),
+            cast_nullable_datetime($claims[RegisteredPayloadClaim::NotBefore->value] ?? null),
             $claims,
         );
     }

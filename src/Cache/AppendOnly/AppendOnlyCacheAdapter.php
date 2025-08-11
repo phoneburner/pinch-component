@@ -8,7 +8,7 @@ use PhoneBurner\Pinch\Component\Cache\AppendOnlyCache;
 use PhoneBurner\Pinch\Component\Cache\CacheKey;
 use PhoneBurner\Pinch\Component\Cache\Exception\CacheWriteFailed;
 use PhoneBurner\Pinch\Component\Cache\Psr6\InMemoryCachePool;
-use PhoneBurner\Pinch\Time\TimeInterval\TimeInterval;
+use PhoneBurner\Pinch\Time\Interval\TimeInterval;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\SimpleCache\CacheInterface;

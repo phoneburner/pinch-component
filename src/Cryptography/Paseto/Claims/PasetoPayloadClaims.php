@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PhoneBurner\Pinch\Component\Cryptography\Paseto\Claims;
 
+use PhoneBurner\Pinch\Time\Interval\TimeInterval;
 use PhoneBurner\Pinch\Time\Standards\Rfc3339;
-use PhoneBurner\Pinch\Time\TimeInterval\TimeInterval;
 use PhoneBurner\Pinch\Time\TimeZone\Tz;
 use PhoneBurner\Pinch\Uuid\OrderedUuid;
 

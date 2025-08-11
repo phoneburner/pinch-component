@@ -10,5 +10,5 @@ use PhoneBurner\Pinch\Component\PhoneNumber\NullablePhoneNumber;
 #[Contract]
 interface NullablePhoneNumberAware
 {
-    public function getValue(): NullablePhoneNumber;
+    public function getPhoneNumber(): NullablePhoneNumber;
 }
