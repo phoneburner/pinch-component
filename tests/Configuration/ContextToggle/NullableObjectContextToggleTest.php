@@ -24,35 +24,35 @@ final class NullableObjectContextToggleTest extends TestCase
     #[Test]
     public function constructorSetsCustomValues(): void
     {
-        $httpObject = new \stdClass();
-        $testObject = new \RuntimeException();
+        $http_object = new \stdClass();
+        $test_object = new \RuntimeException();
 
         $toggle = new NullableObjectContextToggle(
-            http: $httpObject,
+            http: $http_object,
             cli: null,
-            test: $testObject,
+            test: $test_object,
         );
 
-        self::assertSame($httpObject, $toggle->http);
+        self::assertSame($http_object, $toggle->http);
         self::assertNull($toggle->cli);
-        self::assertSame($testObject, $toggle->test);
+        self::assertSame($test_object, $toggle->test);
     }
 
     #[Test]
     public function invokeReturnsCorrectValueForContext(): void
     {
-        $httpObject = new \stdClass();
-        $testObject = new \RuntimeException();
+        $http_object = new \stdClass();
+        $test_object = new \RuntimeException();
 
         $toggle = new NullableObjectContextToggle(
-            http: $httpObject,
+            http: $http_object,
             cli: null,
-            test: $testObject,
+            test: $test_object,
         );
 
-        self::assertSame($httpObject, $toggle(Context::Http));
+        self::assertSame($http_object, $toggle(Context::Http));
         self::assertNull($toggle(Context::Cli));
-        self::assertSame($testObject, $toggle(Context::Test));
+        self::assertSame($test_object, $toggle(Context::Test));
     }
 
     #[Test]
@@ -73,23 +73,23 @@ final class NullableObjectContextToggleTest extends TestCase
     public function handlesDifferentObjectTypesAndNull(): void
     {
         $closure = fn(): string => 'result';
-        $dateTime = new \DateTimeImmutable('2024-01-01');
+        $datetime = new \DateTimeImmutable('2024-01-01');
 
         $toggle = new NullableObjectContextToggle(
             http: $closure,
             cli: null,
-            test: $dateTime,
+            test: $datetime,
         );
 
         self::assertSame($closure, $toggle(Context::Http));
         self::assertNull($toggle(Context::Cli));
-        self::assertSame($dateTime, $toggle(Context::Test));
+        self::assertSame($datetime, $toggle(Context::Test));
     }
 
     #[Test]
     public function handlesAnonymousClassesAndNull(): void
     {
-        $anonymousClass = new class {
+        $anonymous_class = new class {
             public string $property = 'test-value';
 
             public function method(): string
@@ -100,34 +100,34 @@ final class NullableObjectContextToggleTest extends TestCase
 
         $toggle = new NullableObjectContextToggle(
             http: null,
-            cli: $anonymousClass,
+            cli: $anonymous_class,
             test: null,
         );
 
         self::assertNull($toggle(Context::Http));
-        self::assertSame($anonymousClass, $toggle(Context::Cli));
+        self::assertSame($anonymous_class, $toggle(Context::Cli));
         self::assertNull($toggle(Context::Test));
     }
 
     #[Test]
     public function handlesObjectsWithStateAndNull(): void
     {
-        $splQueue = new \SplQueue();
-        $splQueue->enqueue('item1');
-        $splQueue->enqueue('item2');
+        $spl_queue = new \SplQueue();
+        $spl_queue->enqueue('item1');
+        $spl_queue->enqueue('item2');
 
         $toggle = new NullableObjectContextToggle(
-            http: $splQueue,
+            http: $spl_queue,
             cli: null,
             test: new \stdClass(),
         );
 
-        self::assertSame($splQueue, $toggle(Context::Http));
+        self::assertSame($spl_queue, $toggle(Context::Http));
         self::assertNull($toggle(Context::Cli));
         self::assertInstanceOf(\stdClass::class, $toggle(Context::Test));
 
         // Verify object state is preserved
-        self::assertSame('item1', $splQueue->dequeue());
+        self::assertSame('item1', $spl_queue->dequeue());
     }
 
     #[Test]

@@ -71,15 +71,15 @@ final class JsonResponseTest extends TestCase
     public function contentTypeHeaderCanBeOverridden(): void
     {
         $data = ['test' => true];
-        $customContentType = 'application/problem+json';
+        $custom_content_type = 'application/problem+json';
         $headers = [
-            HttpHeader::CONTENT_TYPE => $customContentType,
+            HttpHeader::CONTENT_TYPE => $custom_content_type,
         ];
 
         $response = new JsonResponse($data, HttpStatus::OK, $headers);
 
         self::assertSame(HttpStatus::OK, $response->getStatusCode());
         self::assertSame(Json::encode($data), (string)$response->getBody());
-        self::assertSame($customContentType, $response->getHeaderLine(HttpHeader::CONTENT_TYPE));
+        self::assertSame($custom_content_type, $response->getHeaderLine(HttpHeader::CONTENT_TYPE));
     }
 }

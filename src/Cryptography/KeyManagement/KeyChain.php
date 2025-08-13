@@ -7,7 +7,11 @@ namespace PhoneBurner\Pinch\Component\Cryptography\KeyManagement;
 use PhoneBurner\Pinch\Collections\Map\GenericMapCollection;
 use PhoneBurner\Pinch\Component\Cryptography\Asymmetric\EncryptionKeyPair;
 use PhoneBurner\Pinch\Component\Cryptography\Asymmetric\SignatureKeyPair;
+use PhoneBurner\Pinch\Component\Cryptography\Asymmetric\SignaturePublicKey;
+use PhoneBurner\Pinch\Component\Cryptography\Hash\Hash;
+use PhoneBurner\Pinch\Component\Cryptography\Hash\HashAlgorithm;
 use PhoneBurner\Pinch\Component\Cryptography\Symmetric\SharedKey;
+use PhoneBurner\Pinch\String\Encoding\Encoding;
 
 /**
  * Keeps track of keys derived from the app key, for use in encryption and decryption.
@@ -48,6 +52,28 @@ final class KeyChain extends GenericMapCollection
     public function signature(): SignatureKeyPair
     {
         return $this->signature_key_pair ??= KeyDerivation::signature($this->app_key);
+    }
+
+    /**
+     * Lookup a signature public key by its SHA-256 key ID.
+     *
+     * The key ID is computed as the SHA-256 hash of the public key's raw bytes.
+     * This method performs a timing-safe comparison to prevent side-channel attacks.
+     *
+     * @param string $key_id SHA-256 hash of the public key as a hex string (64 characters)
+     * @return SignaturePublicKey|null The matching public key if found, null otherwise
+     */
+    public function lookup(string $key_id): SignaturePublicKey|null
+    {
+        $signature_public_key = $this->signature()->public();
+        $public_key_hash = Hash::string($signature_public_key->bytes(), HashAlgorithm::SHA256);
+
+        // Use timing-safe comparison to prevent side-channel attacks
+        if (\hash_equals($key_id, $public_key_hash->digest(Encoding::Hex))) {
+            return $signature_public_key;
+        }
+
+        return null;
     }
 
     #[\Override]

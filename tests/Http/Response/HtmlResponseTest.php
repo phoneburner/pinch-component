@@ -57,15 +57,15 @@ final class HtmlResponseTest extends TestCase
     public function contentTypeHeaderCanBeOverridden(): void
     {
         $html = '<html><body><h1>Test</h1></body></html>';
-        $customContentType = 'text/xml';
+        $custom_content_type = 'text/xml';
         $headers = [
-            HttpHeader::CONTENT_TYPE => $customContentType,
+            HttpHeader::CONTENT_TYPE => $custom_content_type,
         ];
 
         $response = new HtmlResponse($html, HttpStatus::OK, $headers);
 
         self::assertSame(HttpStatus::OK, $response->getStatusCode());
         self::assertSame($html, (string)$response->getBody());
-        self::assertSame($customContentType, $response->getHeaderLine(HttpHeader::CONTENT_TYPE));
+        self::assertSame($custom_content_type, $response->getHeaderLine(HttpHeader::CONTENT_TYPE));
     }
 }

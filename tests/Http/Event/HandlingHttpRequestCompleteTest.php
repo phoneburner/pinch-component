@@ -6,7 +6,7 @@ namespace PhoneBurner\Pinch\Component\Tests\Http\Event;
 
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\ServerRequest;
-use PhoneBurner\Pinch\Component\Http\Event\HandlingHttpRequestComplete;
+use PhoneBurner\Pinch\Component\Http\Event\HandlingHttpRequestCompleted;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +17,7 @@ final class HandlingHttpRequestCompleteTest extends TestCase
     {
         $request = new ServerRequest();
         $response = new Response();
-        $event = new HandlingHttpRequestComplete($request, $response);
+        $event = new HandlingHttpRequestCompleted($request, $response);
 
         self::assertSame($request, $event->request);
         self::assertSame($response, $event->response);

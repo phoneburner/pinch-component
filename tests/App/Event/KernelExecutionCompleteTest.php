@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhoneBurner\Pinch\Component\Tests\App\Event;
 
-use PhoneBurner\Pinch\Component\App\Event\KernelExecutionComplete;
+use PhoneBurner\Pinch\Component\App\Event\KernelExecutionCompleted;
 use PhoneBurner\Pinch\Component\App\Kernel;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -15,6 +15,6 @@ final class KernelExecutionCompleteTest extends TestCase
     public function constructorSetsKernelProperty(): void
     {
         $kernel = $this->createMock(Kernel::class);
-        self::assertSame($kernel, new KernelExecutionComplete($kernel)->kernel);
+        self::assertSame($kernel, new KernelExecutionCompleted($kernel)->kernel);
     }
 }

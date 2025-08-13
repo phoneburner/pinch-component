@@ -6,8 +6,11 @@ namespace PhoneBurner\Pinch\Component\Tests\Cryptography\KeyManagement;
 
 use PhoneBurner\Pinch\Component\Cryptography\Asymmetric\EncryptionKeyPair;
 use PhoneBurner\Pinch\Component\Cryptography\Asymmetric\SignatureKeyPair;
+use PhoneBurner\Pinch\Component\Cryptography\Hash\Hash;
+use PhoneBurner\Pinch\Component\Cryptography\Hash\HashAlgorithm;
 use PhoneBurner\Pinch\Component\Cryptography\KeyManagement\KeyChain;
 use PhoneBurner\Pinch\Component\Cryptography\Symmetric\SharedKey;
+use PhoneBurner\Pinch\String\Encoding\Encoding;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -105,5 +108,70 @@ final class KeyChainTest extends TestCase
         self::assertNotSame($shared_key1, $shared_key2);
         self::assertNotSame($encryption_key_pair1, $encryption_key_pair2);
         self::assertNotSame($signature_key_pair1, $signature_key_pair2);
+    }
+
+    #[Test]
+    public function lookupReturnsSignaturePublicKeyForMatchingKeyId(): void
+    {
+        $signature_public_key = $this->key_chain->signature()->public();
+        $key_id = Hash::string($signature_public_key->bytes(), HashAlgorithm::SHA256)->digest(Encoding::Hex);
+
+        $result = $this->key_chain->lookup($key_id);
+
+        self::assertSame($signature_public_key, $result);
+    }
+
+    #[Test]
+    public function lookupReturnsNullForNonMatchingKeyId(): void
+    {
+        $random_key_id = \bin2hex(\random_bytes(32)); // 64-character hex string
+
+        $result = $this->key_chain->lookup($random_key_id);
+
+        self::assertNull($result);
+    }
+
+    #[Test]
+    public function lookupReturnsNullForInvalidKeyId(): void
+    {
+        $invalid_key_id = 'invalid-key-id';
+
+        $result = $this->key_chain->lookup($invalid_key_id);
+
+        self::assertNull($result);
+    }
+
+    #[Test]
+    public function lookupUsesTimingSafeComparison(): void
+    {
+        $signature_public_key = $this->key_chain->signature()->public();
+        $correct_key_id = Hash::string($signature_public_key->bytes(), HashAlgorithm::SHA256)->digest(Encoding::Hex);
+
+        // Create a similar but different key ID (same length, different content)
+        $similar_key_id = \str_repeat('a', 64);
+
+        $result_correct = $this->key_chain->lookup($correct_key_id);
+        $result_similar = $this->key_chain->lookup($similar_key_id);
+
+        self::assertSame($signature_public_key, $result_correct);
+        self::assertNull($result_similar);
+    }
+
+    #[Test]
+    public function lookupConsistentlyReturnsExpectedResultsAcrossMultipleCalls(): void
+    {
+        $signature_public_key = $this->key_chain->signature()->public();
+        $key_id = Hash::string($signature_public_key->bytes(), HashAlgorithm::SHA256)->digest(Encoding::Hex);
+
+        // Call lookup multiple times to ensure consistency
+        $result1 = $this->key_chain->lookup($key_id);
+        $result2 = $this->key_chain->lookup($key_id);
+        $result3 = $this->key_chain->lookup($key_id);
+
+        self::assertSame($signature_public_key, $result1);
+        self::assertSame($signature_public_key, $result2);
+        self::assertSame($signature_public_key, $result3);
+        self::assertSame($result1, $result2);
+        self::assertSame($result2, $result3);
     }
 }

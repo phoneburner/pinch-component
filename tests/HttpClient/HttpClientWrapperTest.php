@@ -7,9 +7,9 @@ namespace PhoneBurner\Pinch\Component\Tests\HttpClient;
 use Laminas\Diactoros\Request;
 use Laminas\Diactoros\Response;
 use PhoneBurner\Pinch\Component\Http\Domain\HttpMethod;
-use PhoneBurner\Pinch\Component\HttpClient\Event\HttpClientRequestComplete;
+use PhoneBurner\Pinch\Component\HttpClient\Event\HttpClientRequestCompleted;
 use PhoneBurner\Pinch\Component\HttpClient\Event\HttpClientRequestFailed;
-use PhoneBurner\Pinch\Component\HttpClient\Event\HttpClientRequestStart;
+use PhoneBurner\Pinch\Component\HttpClient\Event\HttpClientRequestStarted;
 use PhoneBurner\Pinch\Component\HttpClient\Exception\HttpClientException;
 use PhoneBurner\Pinch\Component\HttpClient\HttpClientWrapper;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -52,14 +52,14 @@ final class HttpClientWrapperTest extends TestCase
             ->expects(self::exactly(2))
             ->method('dispatch')
             ->with(self::callback(static function ($event) use ($request): bool {
-                static $callCount = 0;
-                ++$callCount;
+                static $call_count = 0;
+                ++$call_count;
 
-                if ($callCount === 1) {
-                    return $event instanceof HttpClientRequestStart && $event->request === $request;
+                if ($call_count === 1) {
+                    return $event instanceof HttpClientRequestStarted && $event->request === $request;
                 }
 
-                return $event instanceof HttpClientRequestComplete;
+                return $event instanceof HttpClientRequestCompleted;
             }));
 
         $this->mock_client
@@ -83,14 +83,14 @@ final class HttpClientWrapperTest extends TestCase
             ->expects(self::exactly(2))
             ->method('dispatch')
             ->with(self::callback(static function ($event) use ($request, $response): bool {
-                static $callCount = 0;
-                ++$callCount;
+                static $call_count = 0;
+                ++$call_count;
 
-                if ($callCount === 1) {
-                    return $event instanceof HttpClientRequestStart;
+                if ($call_count === 1) {
+                    return $event instanceof HttpClientRequestStarted;
                 }
 
-                return $event instanceof HttpClientRequestComplete
+                return $event instanceof HttpClientRequestCompleted
                     && $event->request === $request
                     && $event->response === $response;
             }));
@@ -116,11 +116,11 @@ final class HttpClientWrapperTest extends TestCase
             ->expects(self::exactly(2))
             ->method('dispatch')
             ->with(self::callback(static function ($event) use ($request, $exception): bool {
-                static $callCount = 0;
-                ++$callCount;
+                static $call_count = 0;
+                ++$call_count;
 
-                if ($callCount === 1) {
-                    return $event instanceof HttpClientRequestStart;
+                if ($call_count === 1) {
+                    return $event instanceof HttpClientRequestStarted;
                 }
 
                 return $event instanceof HttpClientRequestFailed

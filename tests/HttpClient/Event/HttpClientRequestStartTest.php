@@ -6,8 +6,8 @@ namespace PhoneBurner\Pinch\Component\Tests\HttpClient\Event;
 
 use Laminas\Diactoros\Request;
 use PhoneBurner\Pinch\Component\Http\Domain\HttpMethod;
-use PhoneBurner\Pinch\Component\Http\Stream\InMemoryStream;
-use PhoneBurner\Pinch\Component\HttpClient\Event\HttpClientRequestStart;
+use PhoneBurner\Pinch\Component\Http\Stream\MemoryStream;
+use PhoneBurner\Pinch\Component\HttpClient\Event\HttpClientRequestStarted;
 use PhoneBurner\Pinch\Component\Logging\LogEntry;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -18,7 +18,7 @@ final class HttpClientRequestStartTest extends TestCase
     public function constructorSetsPublicProperties(): void
     {
         $request = new Request('https://example.com/test', HttpMethod::Post->value);
-        $event = new HttpClientRequestStart($request);
+        $event = new HttpClientRequestStarted($request);
 
         self::assertSame($request, $event->request);
     }
@@ -29,13 +29,13 @@ final class HttpClientRequestStartTest extends TestCase
         $request = new Request(
             'https://example.com/test',
             HttpMethod::Post->value,
-            body: new InMemoryStream('test body'),
+            body: new MemoryStream('test body'),
             headers: [
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer token123',
             ],
         );
-        $event = new HttpClientRequestStart($request);
+        $event = new HttpClientRequestStarted($request);
         $log_entry = $event->getLogEntry();
 
         self::assertSame('HTTP Client Request Starting', $log_entry->message);
@@ -54,7 +54,7 @@ final class HttpClientRequestStartTest extends TestCase
     public function getLogEntryWorksWithMinimalRequest(): void
     {
         $request = new Request('https://example.com', HttpMethod::Get->value);
-        $event = new HttpClientRequestStart($request);
+        $event = new HttpClientRequestStarted($request);
         $log_entry = $event->getLogEntry();
 
         self::assertInstanceOf(LogEntry::class, $log_entry);

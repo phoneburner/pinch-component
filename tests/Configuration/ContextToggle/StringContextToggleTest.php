@@ -89,15 +89,15 @@ final class StringContextToggleTest extends TestCase
     #[Test]
     public function handlesLongStrings(): void
     {
-        $longString = \str_repeat('a', 10000);
+        $long_string = \str_repeat('a', 10000);
         $toggle = new StringContextToggle(
-            http: $longString,
+            http: $long_string,
             cli: 'short',
-            test: $longString,
+            test: $long_string,
         );
 
-        self::assertSame($longString, $toggle(Context::Http));
+        self::assertSame($long_string, $toggle(Context::Http));
         self::assertSame('short', $toggle(Context::Cli));
-        self::assertSame($longString, $toggle(Context::Test));
+        self::assertSame($long_string, $toggle(Context::Test));
     }
 }

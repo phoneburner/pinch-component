@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PhoneBurner\Pinch\Component\Http\Middleware;
 
-use PhoneBurner\Pinch\Component\Http\Event\FallbackHandlerHandlingComplete;
-use PhoneBurner\Pinch\Component\Http\Event\FallbackHandlerHandlingStart;
-use PhoneBurner\Pinch\Component\Http\Event\MiddlewareProcessingComplete;
-use PhoneBurner\Pinch\Component\Http\Event\MiddlewareProcessingStart;
+use PhoneBurner\Pinch\Component\Http\Event\FallbackHandlerHandlingCompleted;
+use PhoneBurner\Pinch\Component\Http\Event\FallbackHandlerHandlingStarted;
+use PhoneBurner\Pinch\Component\Http\Event\MiddlewareProcessingCompleted;
+use PhoneBurner\Pinch\Component\Http\Event\MiddlewareProcessingStarted;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -52,7 +52,7 @@ abstract class MiddlewareChain implements MutableMiddlewareRequestHandler
 
     private function callFallbackHandler(ServerRequestInterface $request): ResponseInterface
     {
-        $this->event_dispatcher?->dispatch(new FallbackHandlerHandlingStart($this->fallback_handler, $request));
+        $this->event_dispatcher?->dispatch(new FallbackHandlerHandlingStarted($this->fallback_handler, $request));
 
         try {
             $response = $this->fallback_handler->handle($request);
@@ -65,7 +65,7 @@ abstract class MiddlewareChain implements MutableMiddlewareRequestHandler
             $response = $e instanceof ResponseInterface ? $e : throw $e;
         }
 
-        $this->event_dispatcher?->dispatch(new FallbackHandlerHandlingComplete($this->fallback_handler, $request, $response));
+        $this->event_dispatcher?->dispatch(new FallbackHandlerHandlingCompleted($this->fallback_handler, $request, $response));
         return $response;
     }
 
@@ -73,7 +73,7 @@ abstract class MiddlewareChain implements MutableMiddlewareRequestHandler
         MiddlewareInterface $middleware,
         ServerRequestInterface $request,
     ): ResponseInterface {
-        $this->event_dispatcher?->dispatch(new MiddlewareProcessingStart($middleware, $request));
+        $this->event_dispatcher?->dispatch(new MiddlewareProcessingStarted($middleware, $request));
 
         try {
             $response = $middleware->process($request, $this);
@@ -86,7 +86,7 @@ abstract class MiddlewareChain implements MutableMiddlewareRequestHandler
             $response = $e instanceof ResponseInterface ? $e : throw $e;
         }
 
-        $this->event_dispatcher?->dispatch(new MiddlewareProcessingComplete($middleware, $request, $response));
+        $this->event_dispatcher?->dispatch(new MiddlewareProcessingCompleted($middleware, $request, $response));
         return $response;
     }
 }

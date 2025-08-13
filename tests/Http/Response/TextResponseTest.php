@@ -57,15 +57,15 @@ final class TextResponseTest extends TestCase
     public function contentTypeHeaderCanBeOverridden(): void
     {
         $text = 'Plain text with custom content type';
-        $customContentType = 'text/csv';
+        $custom_content_type = 'text/csv';
         $headers = [
-            HttpHeader::CONTENT_TYPE => $customContentType,
+            HttpHeader::CONTENT_TYPE => $custom_content_type,
         ];
 
         $response = new TextResponse($text, HttpStatus::OK, $headers);
 
         self::assertSame(HttpStatus::OK, $response->getStatusCode());
         self::assertSame($text, (string)$response->getBody());
-        self::assertSame($customContentType, $response->getHeaderLine(HttpHeader::CONTENT_TYPE));
+        self::assertSame($custom_content_type, $response->getHeaderLine(HttpHeader::CONTENT_TYPE));
     }
 }

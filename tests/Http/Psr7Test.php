@@ -7,7 +7,7 @@ namespace PhoneBurner\Pinch\Component\Tests\Http;
 use Laminas\Diactoros\StreamFactory;
 use PhoneBurner\Pinch\Component\Http\Domain\HttpMethod;
 use PhoneBurner\Pinch\Component\Http\Psr7;
-use PhoneBurner\Pinch\Component\Http\RequestFactory;
+use PhoneBurner\Pinch\Component\Http\Request\DefaultRequestFactory;
 use PhoneBurner\Pinch\Component\Tests\Fixtures\MockRequestHandler;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
@@ -21,7 +21,7 @@ final class Psr7Test extends TestCase
     #[Test]
     public function attributeReturnsNullWhenAttributeNotFound(): void
     {
-        $request = new RequestFactory()->server(HttpMethod::Get, 'http://example.com');
+        $request = new DefaultRequestFactory()->createServerRequest(HttpMethod::Get, 'http://example.com');
 
         self::assertNull(Psr7::attribute(RequestHandlerInterface::class, $request));
     }
@@ -29,7 +29,7 @@ final class Psr7Test extends TestCase
     #[Test]
     public function attributeReturnsNullWhenAttributeNotInstance(): void
     {
-        $request = new RequestFactory()->server(HttpMethod::Get, 'http://example.com', attributes: [
+        $request = new DefaultRequestFactory()->createServerRequest(HttpMethod::Get, 'http://example.com', attributes: [
             RequestHandlerInterface::class => new \stdClass(),
         ]);
 
@@ -40,7 +40,7 @@ final class Psr7Test extends TestCase
     public function attributeReturnsInstanceOnHappyPath(): void
     {
         $handler = new MockRequestHandler();
-        $request = new RequestFactory()->server(HttpMethod::Get, 'http://example.com', attributes: [
+        $request = new DefaultRequestFactory()->createServerRequest(HttpMethod::Get, 'http://example.com', attributes: [
             RequestHandlerInterface::class => $handler,
         ]);
 

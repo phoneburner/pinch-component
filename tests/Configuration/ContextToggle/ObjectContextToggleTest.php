@@ -14,61 +14,61 @@ final class ObjectContextToggleTest extends TestCase
     #[Test]
     public function constructorSetsCustomValues(): void
     {
-        $httpObject = new \stdClass();
-        $cliObject = new \DateTimeImmutable();
-        $testObject = new \RuntimeException();
+        $http_object = new \stdClass();
+        $cli_object = new \DateTimeImmutable();
+        $test_object = new \RuntimeException();
 
         $toggle = new ObjectContextToggle(
-            http: $httpObject,
-            cli: $cliObject,
-            test: $testObject,
+            http: $http_object,
+            cli: $cli_object,
+            test: $test_object,
         );
 
-        self::assertSame($httpObject, $toggle->http);
-        self::assertSame($cliObject, $toggle->cli);
-        self::assertSame($testObject, $toggle->test);
+        self::assertSame($http_object, $toggle->http);
+        self::assertSame($cli_object, $toggle->cli);
+        self::assertSame($test_object, $toggle->test);
     }
 
     #[Test]
     public function invokeReturnsCorrectValueForContext(): void
     {
-        $httpObject = new \stdClass();
-        $cliObject = new \DateTimeImmutable();
-        $testObject = new \RuntimeException();
+        $http_object = new \stdClass();
+        $cli_object = new \DateTimeImmutable();
+        $test_object = new \RuntimeException();
 
         $toggle = new ObjectContextToggle(
-            http: $httpObject,
-            cli: $cliObject,
-            test: $testObject,
+            http: $http_object,
+            cli: $cli_object,
+            test: $test_object,
         );
 
-        self::assertSame($httpObject, $toggle(Context::Http));
-        self::assertSame($cliObject, $toggle(Context::Cli));
-        self::assertSame($testObject, $toggle(Context::Test));
+        self::assertSame($http_object, $toggle(Context::Http));
+        self::assertSame($cli_object, $toggle(Context::Cli));
+        self::assertSame($test_object, $toggle(Context::Test));
     }
 
     #[Test]
     public function handlesDifferentObjectTypes(): void
     {
         $closure = fn(): string => 'result';
-        $dateTime = new \DateTimeImmutable('2024-01-01');
+        $datetime = new \DateTimeImmutable('2024-01-01');
         $exception = new \InvalidArgumentException('test message');
 
         $toggle = new ObjectContextToggle(
             http: $closure,
-            cli: $dateTime,
+            cli: $datetime,
             test: $exception,
         );
 
         self::assertSame($closure, $toggle(Context::Http));
-        self::assertSame($dateTime, $toggle(Context::Cli));
+        self::assertSame($datetime, $toggle(Context::Cli));
         self::assertSame($exception, $toggle(Context::Test));
     }
 
     #[Test]
     public function handlesAnonymousClasses(): void
     {
-        $anonymousClass = new class {
+        $anonymous_class = new class {
             public string $property = 'test-value';
 
             public function method(): string
@@ -78,38 +78,38 @@ final class ObjectContextToggleTest extends TestCase
         };
 
         $toggle = new ObjectContextToggle(
-            http: $anonymousClass,
+            http: $anonymous_class,
             cli: new \stdClass(),
-            test: $anonymousClass,
+            test: $anonymous_class,
         );
 
-        self::assertSame($anonymousClass, $toggle(Context::Http));
+        self::assertSame($anonymous_class, $toggle(Context::Http));
         self::assertInstanceOf(\stdClass::class, $toggle(Context::Cli));
-        self::assertSame($anonymousClass, $toggle(Context::Test));
+        self::assertSame($anonymous_class, $toggle(Context::Test));
     }
 
     #[Test]
     public function handlesObjectsWithState(): void
     {
-        $splQueue = new \SplQueue();
-        $splQueue->enqueue('item1');
-        $splQueue->enqueue('item2');
+        $spl_queue = new \SplQueue();
+        $spl_queue->enqueue('item1');
+        $spl_queue->enqueue('item2');
 
-        $arrayObject = new \ArrayObject(['key' => 'value']);
+        $array_object = new \ArrayObject(['key' => 'value']);
 
         $toggle = new ObjectContextToggle(
-            http: $splQueue,
-            cli: $arrayObject,
+            http: $spl_queue,
+            cli: $array_object,
             test: new \stdClass(),
         );
 
-        self::assertSame($splQueue, $toggle(Context::Http));
-        self::assertSame($arrayObject, $toggle(Context::Cli));
+        self::assertSame($spl_queue, $toggle(Context::Http));
+        self::assertSame($array_object, $toggle(Context::Cli));
         self::assertInstanceOf(\stdClass::class, $toggle(Context::Test));
 
         // Verify object state is preserved
-        self::assertSame('item1', $splQueue->dequeue());
-        self::assertSame('value', $arrayObject['key']);
+        self::assertSame('item1', $spl_queue->dequeue());
+        self::assertSame('value', $array_object['key']);
     }
 
     #[Test]

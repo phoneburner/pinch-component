@@ -106,16 +106,16 @@ final class MixedContextToggleTest extends TestCase
     #[Test]
     public function handlesComplexObjects(): void
     {
-        $dateTime = new \DateTimeImmutable();
+        $datetime = new \DateTimeImmutable();
         $exception = new \RuntimeException('test');
 
         $toggle = new MixedContextToggle(
-            http: $dateTime,
+            http: $datetime,
             cli: $exception,
             test: Context::Http,
         );
 
-        self::assertSame($dateTime, $toggle(Context::Http));
+        self::assertSame($datetime, $toggle(Context::Http));
         self::assertSame($exception, $toggle(Context::Cli));
         self::assertSame(Context::Http, $toggle(Context::Test));
     }

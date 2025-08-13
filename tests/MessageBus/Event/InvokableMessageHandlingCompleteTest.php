@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhoneBurner\Pinch\Component\Tests\MessageBus\Event;
 
-use PhoneBurner\Pinch\Component\MessageBus\Event\InvokableMessageHandlingComplete;
+use PhoneBurner\Pinch\Component\MessageBus\Event\InvokableMessageHandlingCompleted;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -15,7 +15,7 @@ final class InvokableMessageHandlingCompleteTest extends TestCase
     public function constructorSetsMessageProperty(): void
     {
         $message = new stdClass();
-        $event = new InvokableMessageHandlingComplete($message);
+        $event = new InvokableMessageHandlingCompleted($message);
 
         self::assertSame($message, $event->message);
     }

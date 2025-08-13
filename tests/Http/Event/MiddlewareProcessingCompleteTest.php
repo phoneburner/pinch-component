@@ -6,7 +6,7 @@ namespace PhoneBurner\Pinch\Component\Tests\Http\Event;
 
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\ServerRequest;
-use PhoneBurner\Pinch\Component\Http\Event\MiddlewareProcessingComplete;
+use PhoneBurner\Pinch\Component\Http\Event\MiddlewareProcessingCompleted;
 use PhoneBurner\Pinch\Component\Http\Middleware\LazyMiddleware;
 use PhoneBurner\Pinch\Component\Http\Middleware\NullMiddleware;
 use PhoneBurner\Pinch\Component\Logging\LogEntry;
@@ -24,7 +24,7 @@ final class MiddlewareProcessingCompleteTest extends TestCase
         $response = new Response();
         $middleware = $this->createMock(MiddlewareInterface::class);
 
-        $event = new MiddlewareProcessingComplete($middleware, $request, $response);
+        $event = new MiddlewareProcessingCompleted($middleware, $request, $response);
 
         self::assertSame($middleware, $event->middleware);
         self::assertSame($request, $event->request);
@@ -38,7 +38,7 @@ final class MiddlewareProcessingCompleteTest extends TestCase
         $response = new Response();
         $middleware = $this->createMock(MiddlewareInterface::class);
 
-        $event = new MiddlewareProcessingComplete($middleware, $request, $response);
+        $event = new MiddlewareProcessingCompleted($middleware, $request, $response);
         $log_entry = $event->getLogEntry();
 
         self::assertInstanceOf(LogEntry::class, $log_entry);
@@ -58,7 +58,7 @@ final class MiddlewareProcessingCompleteTest extends TestCase
         $container->method('get')->with($middleware_name)->willReturn(new NullMiddleware());
         $lazy_middleware = LazyMiddleware::make($container, $middleware_name);
 
-        $event = new MiddlewareProcessingComplete($lazy_middleware, $request, $response);
+        $event = new MiddlewareProcessingCompleted($lazy_middleware, $request, $response);
 
         $log_entry = $event->getLogEntry();
         self::assertInstanceOf(LogEntry::class, $log_entry);

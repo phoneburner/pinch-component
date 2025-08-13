@@ -25,33 +25,33 @@ final class ArrayContextToggleTest extends TestCase
     #[Test]
     public function constructorSetsCustomValues(): void
     {
-        $httpArray = ['host' => 'example.com', 'port' => 80];
-        $cliArray = ['verbose' => true, 'timeout' => 300];
-        $testArray = ['debug' => true, 'seed' => 12345];
+        $http_array = ['host' => 'example.com', 'port' => 80];
+        $cli_array = ['verbose' => true, 'timeout' => 300];
+        $test_array = ['debug' => true, 'seed' => 12345];
 
         $toggle = new ArrayContextToggle(
-            http: $httpArray,
-            cli: $cliArray,
-            test: $testArray,
+            http: $http_array,
+            cli: $cli_array,
+            test: $test_array,
         );
 
-        self::assertSame($httpArray, $toggle->http);
-        self::assertSame($cliArray, $toggle->cli);
-        self::assertSame($testArray, $toggle->test);
+        self::assertSame($http_array, $toggle->http);
+        self::assertSame($cli_array, $toggle->cli);
+        self::assertSame($test_array, $toggle->test);
     }
 
     #[Test]
     #[DataProvider('contextValueProvider')]
     public function invokeReturnsCorrectValueForContext(Context $context, array $expected): void
     {
-        $httpArray = ['host' => 'example.com', 'port' => 80];
-        $cliArray = ['verbose' => true, 'timeout' => 300];
-        $testArray = ['debug' => true, 'seed' => 12345];
+        $http_array = ['host' => 'example.com', 'port' => 80];
+        $cli_array = ['verbose' => true, 'timeout' => 300];
+        $test_array = ['debug' => true, 'seed' => 12345];
 
         $toggle = new ArrayContextToggle(
-            http: $httpArray,
-            cli: $cliArray,
-            test: $testArray,
+            http: $http_array,
+            cli: $cli_array,
+            test: $test_array,
         );
 
         $result = $toggle($context);
@@ -61,13 +61,13 @@ final class ArrayContextToggleTest extends TestCase
 
     public static function contextValueProvider(): \Generator
     {
-        $httpArray = ['host' => 'example.com', 'port' => 80];
-        $cliArray = ['verbose' => true, 'timeout' => 300];
-        $testArray = ['debug' => true, 'seed' => 12345];
+        $http_array = ['host' => 'example.com', 'port' => 80];
+        $cli_array = ['verbose' => true, 'timeout' => 300];
+        $test_array = ['debug' => true, 'seed' => 12345];
 
-        yield 'HTTP context returns http array' => [Context::Http, $httpArray];
-        yield 'CLI context returns cli array' => [Context::Cli, $cliArray];
-        yield 'Test context returns test array' => [Context::Test, $testArray];
+        yield 'HTTP context returns http array' => [Context::Http, $http_array];
+        yield 'CLI context returns cli array' => [Context::Cli, $cli_array];
+        yield 'Test context returns test array' => [Context::Test, $test_array];
     }
 
     #[Test]

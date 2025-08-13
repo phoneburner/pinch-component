@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhoneBurner\Pinch\Component\Http\Event;
 
+use PhoneBurner\Pinch\Attribute\Psr14Event;
 use PhoneBurner\Pinch\Component\Http\RateLimiter\RateLimitResult;
 
 /**
@@ -12,6 +13,7 @@ use PhoneBurner\Pinch\Component\Http\RateLimiter\RateLimitResult;
  * This event is fired for the sad path when a request is denied
  * because the rate limits have been exceeded.
  */
+#[Psr14Event]
 final readonly class RequestRateLimitExceeded
 {
     public function __construct(

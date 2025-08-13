@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhoneBurner\Pinch\Component\Tests\Http;
 
-use PhoneBurner\Pinch\Component\Http\RequestHandlerFactory;
+use PhoneBurner\Pinch\Component\Http\Request\RequestHandlerFactory;
 use PhoneBurner\Pinch\Component\Tests\Fixtures\MockContainer;
 use PhoneBurner\Pinch\Component\Tests\Fixtures\MockRequestHandler;
 use PHPUnit\Framework\Attributes\Test;

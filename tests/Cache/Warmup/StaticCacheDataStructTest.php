@@ -17,9 +17,9 @@ final class StaticCacheDataStructTest extends TestCase
         $key = new CacheKey('foo');
         $value = new \stdClass();
 
-        $dataStruct = new StaticCacheDataStruct($key, $value);
+        $data_struct = new StaticCacheDataStruct($key, $value);
 
-        self::assertSame($key, $dataStruct->key);
-        self::assertSame($value, $dataStruct->value);
+        self::assertSame($key, $data_struct->key);
+        self::assertSame($value, $data_struct->value);
     }
 }

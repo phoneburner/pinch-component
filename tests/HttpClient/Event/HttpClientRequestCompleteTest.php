@@ -7,7 +7,7 @@ namespace PhoneBurner\Pinch\Component\Tests\HttpClient\Event;
 use Laminas\Diactoros\Request;
 use PhoneBurner\Pinch\Component\Http\Domain\HttpMethod;
 use PhoneBurner\Pinch\Component\Http\Response\StreamResponse;
-use PhoneBurner\Pinch\Component\HttpClient\Event\HttpClientRequestComplete;
+use PhoneBurner\Pinch\Component\HttpClient\Event\HttpClientRequestCompleted;
 use PhoneBurner\Pinch\Component\Logging\LogEntry;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -19,7 +19,7 @@ final class HttpClientRequestCompleteTest extends TestCase
     {
         $request = new Request('https://example.com/test', HttpMethod::Post->value);
         $response = StreamResponse::make('success 123', status: 200);
-        $event = new HttpClientRequestComplete($request, $response);
+        $event = new HttpClientRequestCompleted($request, $response);
 
         self::assertSame($request, $event->request);
         self::assertSame($response, $event->response);
@@ -30,7 +30,7 @@ final class HttpClientRequestCompleteTest extends TestCase
     {
         $request = new Request('https://example.com/test', HttpMethod::Post->value);
         $response = StreamResponse::make('created', status: 201, headers: ['Content-Type' => 'application/json']);
-        $event = new HttpClientRequestComplete($request, $response);
+        $event = new HttpClientRequestCompleted($request, $response);
         $log_entry = $event->getLogEntry();
 
         self::assertInstanceOf(LogEntry::class, $log_entry);
@@ -50,7 +50,7 @@ final class HttpClientRequestCompleteTest extends TestCase
     {
         $request = new Request('https://example.com', HttpMethod::Get->value);
         $response = new StreamResponse();
-        $event = new HttpClientRequestComplete($request, $response);
+        $event = new HttpClientRequestCompleted($request, $response);
         $log_entry = $event->getLogEntry();
 
         self::assertInstanceOf(LogEntry::class, $log_entry);
@@ -66,7 +66,7 @@ final class HttpClientRequestCompleteTest extends TestCase
     {
         $request = new Request('https://api.example.com/users', HttpMethod::Delete->value);
         $response = StreamResponse::make('Not Found', status: 404);
-        $event = new HttpClientRequestComplete($request, $response);
+        $event = new HttpClientRequestCompleted($request, $response);
         $log_entry = $event->getLogEntry();
 
         self::assertSame(404, $log_entry->context['status_code']);

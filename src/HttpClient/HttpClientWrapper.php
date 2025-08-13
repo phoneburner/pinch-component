@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace PhoneBurner\Pinch\Component\HttpClient;
 
-use PhoneBurner\Pinch\Component\HttpClient\Event\HttpClientRequestComplete;
+use PhoneBurner\Pinch\Component\HttpClient\Event\HttpClientRequestCompleted;
 use PhoneBurner\Pinch\Component\HttpClient\Event\HttpClientRequestFailed;
-use PhoneBurner\Pinch\Component\HttpClient\Event\HttpClientRequestStart;
+use PhoneBurner\Pinch\Component\HttpClient\Event\HttpClientRequestStarted;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
@@ -26,11 +26,11 @@ final readonly class HttpClientWrapper implements HttpClient
 
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
-        $this->event_dispatcher->dispatch(new HttpClientRequestStart($request));
+        $this->event_dispatcher->dispatch(new HttpClientRequestStarted($request));
 
         try {
             $response = $this->client->sendRequest($request);
-            $this->event_dispatcher->dispatch(new HttpClientRequestComplete($request, $response));
+            $this->event_dispatcher->dispatch(new HttpClientRequestCompleted($request, $response));
             return $response;
         } catch (ClientExceptionInterface $exception) {
             $this->event_dispatcher->dispatch(new HttpClientRequestFailed($request, $exception));

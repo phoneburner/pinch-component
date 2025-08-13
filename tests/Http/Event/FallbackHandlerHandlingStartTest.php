@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace PhoneBurner\Pinch\Component\Tests\Http\Event;
 
 use Laminas\Diactoros\ServerRequest;
-use PhoneBurner\Pinch\Component\Http\Event\FallbackHandlerHandlingStart;
+use PhoneBurner\Pinch\Component\Http\Event\FallbackHandlerHandlingStarted;
 use PhoneBurner\Pinch\Component\Logging\LogEntry;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -19,7 +19,7 @@ final class FallbackHandlerHandlingStartTest extends TestCase
         $request = new ServerRequest();
         $request_handler = $this->createMock(RequestHandlerInterface::class);
 
-        $event = new FallbackHandlerHandlingStart($request_handler, $request);
+        $event = new FallbackHandlerHandlingStarted($request_handler, $request);
 
         self::assertSame($request_handler, $event->request_handler);
         self::assertSame($request, $event->request);
@@ -31,7 +31,7 @@ final class FallbackHandlerHandlingStartTest extends TestCase
         $request = new ServerRequest();
         $request_handler = $this->createMock(RequestHandlerInterface::class);
 
-        $event = new FallbackHandlerHandlingStart($request_handler, $request);
+        $event = new FallbackHandlerHandlingStarted($request_handler, $request);
         $log_entry = $event->getLogEntry();
 
         self::assertInstanceOf(LogEntry::class, $log_entry);

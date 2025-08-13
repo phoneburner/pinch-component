@@ -61,6 +61,11 @@ class HttpHeader
     public const string EXPIRES = 'Expires';
     public const string FORWARDED = 'Forwarded';
     public const string FROM = 'From';
+    public const string GRIP_SIG = 'Grip-Sig';
+    public const string GRIP_HOLD = 'Grip-Hold';
+    public const string GRIP_CHANNEL = 'Grip-Channel';
+    public const string GRIP_TIMEOUT = 'Grip-Timeout';
+    public const string GRIP_KEEP_ALIVE = 'Grip-Keep-Alive';
     public const string HOST = 'Host';
     public const string IDEMPOTENCY_KEY = 'Idempotency-Key';
     public const string IF_MATCH = 'If-Match';

@@ -130,8 +130,8 @@ final class BufferLoggerTest extends TestCase
     #[Test]
     public function copyTransfersEntriesToAnotherLogger(): void
     {
-        $targetLogger = self::createMock(LoggerInterface::class);
-        $targetLogger->expects(self::exactly(2))
+        $target_logger = self::createMock(LoggerInterface::class);
+        $target_logger->expects(self::exactly(2))
             ->method('log')
             ->willReturnCallback(function (string $level, string $message, array $context): void {
                 static $calls = 0;
@@ -153,7 +153,7 @@ final class BufferLoggerTest extends TestCase
         $this->logger->info('first message');
         $this->logger->error('second message', ['context' => 'value']);
 
-        $this->logger->copy($targetLogger);
+        $this->logger->copy($target_logger);
         self::assertCount(2, $this->logger, 'Original buffer should remain unchanged after copy');
     }
 
@@ -172,7 +172,7 @@ final class BufferLoggerTest extends TestCase
         $entries = $this->logger->clear();
         self::assertCount(8, $entries);
 
-        $expectedLevels = [
+        $expected_levels = [
             LogLevel::Emergency,
             LogLevel::Alert,
             LogLevel::Critical,
@@ -184,7 +184,7 @@ final class BufferLoggerTest extends TestCase
         ];
 
         foreach ($entries as $i => $entry) {
-            self::assertSame($expectedLevels[$i], $entry->level);
+            self::assertSame($expected_levels[$i], $entry->level);
             self::assertStringContainsString($entry->level->value, (string)$entry->message);
         }
     }

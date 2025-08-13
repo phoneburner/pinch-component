@@ -16,24 +16,24 @@ final class AttributeAnalyzerTest extends TestCase
     #[Test]
     public function hasReturnsTrueWhenAnalyzeReturnsObject(): void
     {
-        $mockAnalyzer = $this->createMock(ClassAnalyzer::class);
-        $mockAnalyzer->expects($this->once())
+        $mock_analyzer = $this->createMock(ClassAnalyzer::class);
+        $mock_analyzer->expects($this->once())
             ->method('analyze')
             ->willReturn(new \stdClass());
 
-        $analyzer = new AttributeAnalyzer($mockAnalyzer);
+        $analyzer = new AttributeAnalyzer($mock_analyzer);
         self::assertTrue($analyzer->has(ClassWithAttributes::class, Contract::class));
     }
 
     #[Test]
     public function hasReturnsFalseWhenAnalyzeThrowsException(): void
     {
-        $mockAnalyzer = $this->createMock(ClassAnalyzer::class);
-        $mockAnalyzer->expects($this->once())
+        $mock_analyzer = $this->createMock(ClassAnalyzer::class);
+        $mock_analyzer->expects($this->once())
             ->method('analyze')
             ->willThrowException(new \Exception('Analysis failed'));
 
-        $analyzer = new AttributeAnalyzer($mockAnalyzer);
+        $analyzer = new AttributeAnalyzer($mock_analyzer);
         self::assertFalse($analyzer->has(ClassWithAttributes::class, Contract::class));
     }
 
@@ -41,13 +41,13 @@ final class AttributeAnalyzerTest extends TestCase
     public function analyzeDelegatesToInnerAnalyzer(): void
     {
         $expected = new \stdClass();
-        $mockAnalyzer = $this->createMock(ClassAnalyzer::class);
-        $mockAnalyzer->expects($this->once())
+        $mock_analyzer = $this->createMock(ClassAnalyzer::class);
+        $mock_analyzer->expects($this->once())
             ->method('analyze')
             ->with(ClassWithAttributes::class, Contract::class, ['scope1'])
             ->willReturn($expected);
 
-        $analyzer = new AttributeAnalyzer($mockAnalyzer);
+        $analyzer = new AttributeAnalyzer($mock_analyzer);
         $result = $analyzer->analyze(ClassWithAttributes::class, Contract::class, ['scope1']);
         self::assertSame($expected, $result);
     }

@@ -12,7 +12,7 @@ use PhoneBurner\Pinch\Component\Http\Response\StreamResponse;
 use PhoneBurner\Pinch\Component\Http\Routing\Domain\StaticFile;
 use PhoneBurner\Pinch\Component\Http\Routing\Match\RouteMatch;
 use PhoneBurner\Pinch\Component\Http\Stream\FileStream;
-use PhoneBurner\Pinch\Component\Http\StreamFactory;
+use PhoneBurner\Pinch\Component\Http\Stream\StreamFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;

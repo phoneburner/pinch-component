@@ -28,8 +28,8 @@ class InMemoryCachePool implements CacheItemPoolInterface
 
     public function getItem(CacheKey|string|\Stringable $key): CacheItemInterface
     {
-        $cacheKey = self::key($key);
-        return $this->items[$cacheKey->normalized] ?? new CacheItem($cacheKey, $this->clock);
+        $cache_key = self::key($key);
+        return $this->items[$cache_key->normalized] ?? new CacheItem($cache_key, $this->clock);
     }
 
     /**

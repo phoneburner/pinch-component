@@ -24,35 +24,35 @@ final class NullableArrayContextToggleTest extends TestCase
     #[Test]
     public function constructorSetsCustomValues(): void
     {
-        $httpArray = ['host' => 'example.com', 'port' => 80];
-        $testArray = ['debug' => true, 'seed' => 12345];
+        $http_array = ['host' => 'example.com', 'port' => 80];
+        $test_array = ['debug' => true, 'seed' => 12345];
 
         $toggle = new NullableArrayContextToggle(
-            http: $httpArray,
+            http: $http_array,
             cli: null,
-            test: $testArray,
+            test: $test_array,
         );
 
-        self::assertSame($httpArray, $toggle->http);
+        self::assertSame($http_array, $toggle->http);
         self::assertNull($toggle->cli);
-        self::assertSame($testArray, $toggle->test);
+        self::assertSame($test_array, $toggle->test);
     }
 
     #[Test]
     public function invokeReturnsCorrectValueForContext(): void
     {
-        $httpArray = ['host' => 'example.com', 'port' => 80];
-        $testArray = ['debug' => true, 'seed' => 12345];
+        $http_array = ['host' => 'example.com', 'port' => 80];
+        $test_array = ['debug' => true, 'seed' => 12345];
 
         $toggle = new NullableArrayContextToggle(
-            http: $httpArray,
+            http: $http_array,
             cli: null,
-            test: $testArray,
+            test: $test_array,
         );
 
-        self::assertSame($httpArray, $toggle(Context::Http));
+        self::assertSame($http_array, $toggle(Context::Http));
         self::assertNull($toggle(Context::Cli));
-        self::assertSame($testArray, $toggle(Context::Test));
+        self::assertSame($test_array, $toggle(Context::Test));
     }
 
     #[Test]

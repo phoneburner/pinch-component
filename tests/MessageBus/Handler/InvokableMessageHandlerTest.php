@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace PhoneBurner\Pinch\Component\Tests\MessageBus\Handler;
 
-use PhoneBurner\Pinch\Component\MessageBus\Event\InvokableMessageHandlingComplete;
+use PhoneBurner\Pinch\Component\MessageBus\Event\InvokableMessageHandlingCompleted;
 use PhoneBurner\Pinch\Component\MessageBus\Event\InvokableMessageHandlingFailed;
-use PhoneBurner\Pinch\Component\MessageBus\Event\InvokableMessageHandlingStarting;
+use PhoneBurner\Pinch\Component\MessageBus\Event\InvokableMessageHandlingStarted;
 use PhoneBurner\Pinch\Component\MessageBus\Handler\InvokableMessageHandler;
 use PhoneBurner\Pinch\Container\InvokingContainer;
 use PHPUnit\Framework\Attributes\Test;
@@ -34,9 +34,9 @@ final class InvokableMessageHandlerTest extends TestCase
         ($handler)($message);
 
         self::assertCount(2, $dispatched_events);
-        self::assertInstanceOf(InvokableMessageHandlingStarting::class, $dispatched_events[0]);
+        self::assertInstanceOf(InvokableMessageHandlingStarted::class, $dispatched_events[0]);
         self::assertSame($message, $dispatched_events[0]->message);
-        self::assertInstanceOf(InvokableMessageHandlingComplete::class, $dispatched_events[1]);
+        self::assertInstanceOf(InvokableMessageHandlingCompleted::class, $dispatched_events[1]);
         self::assertSame($message, $dispatched_events[1]->message);
     }
 
@@ -67,7 +67,7 @@ final class InvokableMessageHandlerTest extends TestCase
         } catch (RuntimeException $e) {
             self::assertSame($exception, $e);
             self::assertCount(2, $dispatched_events);
-            self::assertInstanceOf(InvokableMessageHandlingStarting::class, $dispatched_events[0]);
+            self::assertInstanceOf(InvokableMessageHandlingStarted::class, $dispatched_events[0]);
             self::assertSame($message, $dispatched_events[0]->message);
             self::assertInstanceOf(InvokableMessageHandlingFailed::class, $dispatched_events[1]);
             self::assertSame($message, $dispatched_events[1]->message);

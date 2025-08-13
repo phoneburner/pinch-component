@@ -11,7 +11,7 @@ interface HttpClientFactory
      * @param float $connect_timeout_seconds // indefinite timeout by default
      * @param bool $enable_ssl_verification // don't disable this unless you are a complete idiot.
      */
-    public function make(
+    public function createHttpClient(
         float $request_timeout_seconds = 0.0,
         float $connect_timeout_seconds = 0.0,
         bool $enable_ssl_verification = true,

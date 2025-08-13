@@ -6,7 +6,7 @@ namespace PhoneBurner\Pinch\Component\Http;
 
 use PhoneBurner\Pinch\Component\Http\Domain\ContentType;
 use PhoneBurner\Pinch\Component\Http\Domain\HttpHeader;
-use PhoneBurner\Pinch\Component\Http\Stream\InMemoryStream;
+use PhoneBurner\Pinch\Component\Http\Stream\TemporaryStream;
 use PhoneBurner\Pinch\Trait\HasNonInstantiableBehavior;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -87,9 +87,9 @@ final readonly class Psr7
     public static function stream(\Stringable|string $string = ''): StreamInterface
     {
         return match (true) {
-            \is_string($string) => InMemoryStream::make($string),
+            \is_string($string) => new TemporaryStream($string),
             $string instanceof StreamInterface => $string,
-            default => InMemoryStream::make((string)$string),
+            default => new TemporaryStream((string)$string),
         };
     }
 }

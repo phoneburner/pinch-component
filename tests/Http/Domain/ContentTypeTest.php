@@ -86,9 +86,9 @@ final class ContentTypeTest extends TestCase
 
     #[Test]
     #[DataProvider('provideMimeTypeLookups')]
-    public function lookupReturnsCorrectMimeType(string $extension, string $expectedMimeType): void
+    public function lookupReturnsCorrectMimeType(string $extension, string $expected_mime_type): void
     {
-        self::assertSame($expectedMimeType, ContentType::lookup($extension));
+        self::assertSame($expected_mime_type, ContentType::lookup($extension));
     }
 
     #[Test]

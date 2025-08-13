@@ -277,11 +277,11 @@ final class ServiceContainerAdapterTest extends TestCase
     #[Test]
     public function setLoggerCopiesBufferLoggerEntries(): void
     {
-        $bufferLogger = new BufferLogger();
-        $container = new ServiceContainerAdapter($this->app, $bufferLogger);
+        $buffer_logger = new BufferLogger();
+        $container = new ServiceContainerAdapter($this->app, $buffer_logger);
 
-        $newLogger = new NullLogger();
-        $container->setLogger($newLogger);
+        $new_logger = new NullLogger();
+        $container->setLogger($new_logger);
 
         // No way to directly verify the entries were copied, but we can check it doesn't throw
         self::assertTrue(true);

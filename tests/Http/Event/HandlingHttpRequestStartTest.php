@@ -7,7 +7,7 @@ namespace PhoneBurner\Pinch\Component\Tests\Http\Event;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Uri;
 use PhoneBurner\Pinch\Component\Http\Domain\HttpMethod;
-use PhoneBurner\Pinch\Component\Http\Event\HandlingHttpRequestStart;
+use PhoneBurner\Pinch\Component\Http\Event\HandlingHttpRequestStarted;
 use PhoneBurner\Pinch\Component\Logging\LogEntry;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -21,7 +21,7 @@ final class HandlingHttpRequestStartTest extends TestCase
             uri: new Uri('https://example.com/test'),
             method: HttpMethod::Post->value,
         );
-        $event = new HandlingHttpRequestStart($request);
+        $event = new HandlingHttpRequestStarted($request);
 
         self::assertSame($request, $event->request);
     }
@@ -33,7 +33,7 @@ final class HandlingHttpRequestStartTest extends TestCase
             uri: new Uri('https://example.com/test'),
             method: HttpMethod::Post->value,
         );
-        $event = new HandlingHttpRequestStart($request);
+        $event = new HandlingHttpRequestStarted($request);
         $log_entry = $event->getLogEntry();
 
         self::assertInstanceOf(LogEntry::class, $log_entry);

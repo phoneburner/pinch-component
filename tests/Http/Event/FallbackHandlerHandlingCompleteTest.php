@@ -6,7 +6,7 @@ namespace PhoneBurner\Pinch\Component\Tests\Http\Event;
 
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\ServerRequest;
-use PhoneBurner\Pinch\Component\Http\Event\FallbackHandlerHandlingComplete;
+use PhoneBurner\Pinch\Component\Http\Event\FallbackHandlerHandlingCompleted;
 use PhoneBurner\Pinch\Component\Logging\LogEntry;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -21,7 +21,7 @@ final class FallbackHandlerHandlingCompleteTest extends TestCase
         $response = new Response();
         $request_handler = $this->createMock(RequestHandlerInterface::class);
 
-        $event = new FallbackHandlerHandlingComplete(
+        $event = new FallbackHandlerHandlingCompleted(
             $request_handler,
             $request,
             $response,
@@ -39,7 +39,7 @@ final class FallbackHandlerHandlingCompleteTest extends TestCase
         $response = new Response();
         $request_handler = $this->createMock(RequestHandlerInterface::class);
 
-        $event = new FallbackHandlerHandlingComplete(
+        $event = new FallbackHandlerHandlingCompleted(
             $request_handler,
             $request,
             $response,
