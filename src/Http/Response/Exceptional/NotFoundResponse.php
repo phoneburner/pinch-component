@@ -11,5 +11,6 @@ class NotFoundResponse extends GenericHttpExceptionResponse
 {
     protected int $status_code = HttpStatus::NOT_FOUND;
     protected string $title = HttpReasonPhrase::NOT_FOUND;
+    protected string $detail = HttpReasonPhrase::NOT_FOUND;
     protected string|null $http_reason_phrase = HttpReasonPhrase::NOT_FOUND;
 }

@@ -19,7 +19,7 @@ final class NotFoundResponseTest extends TestCase
 
         self::assertSame(HttpStatus::NOT_FOUND, $sut->getStatusCode());
         self::assertSame('Not Found', $sut->getStatusTitle());
-        self::assertSame('', $sut->getStatusDetail());
+        self::assertSame('Not Found', $sut->getStatusDetail());
         self::assertSame([], $sut->getAdditional());
 
         self::assertSame(HttpStatus::NOT_FOUND, $sut->getCode());
