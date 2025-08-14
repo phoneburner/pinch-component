@@ -4,37 +4,30 @@ declare(strict_types=1);
 
 namespace PhoneBurner\Pinch\Component\Tests\Http\RateLimiter;
 
-use DateTimeImmutable;
 use PhoneBurner\Pinch\Component\Http\Domain\RateLimits;
 use PhoneBurner\Pinch\Component\Http\Event\RequestRateLimitUpdated;
 use PhoneBurner\Pinch\Component\Http\RateLimiter\NullRateLimiter;
+use PhoneBurner\Pinch\Time\Clock\StaticClock;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class NullRateLimiterTest extends TestCase
 {
-    private ClockInterface&MockObject $clock;
     private EventDispatcherInterface&MockObject $event_dispatcher;
     private NullRateLimiter $limiter;
 
     protected function setUp(): void
     {
-        $this->clock = $this->createMock(ClockInterface::class);
+        $clock = new StaticClock(new \DateTimeImmutable('2022-01-20 14:30:00'));
         $this->event_dispatcher = $this->createMock(EventDispatcherInterface::class);
-        $this->limiter = new NullRateLimiter($this->clock, $this->event_dispatcher);
+        $this->limiter = new NullRateLimiter($clock, $this->event_dispatcher);
     }
 
     #[Test]
     public function throttleAlwaysAllowsRequests(): void
     {
-        $now = new DateTimeImmutable('2022-01-20 14:30:00');
-        $this->clock->expects($this->once())
-            ->method('now')
-            ->willReturn($now);
-
         $this->event_dispatcher->expects($this->once())
             ->method('dispatch')
             ->with($this->isInstanceOf(RequestRateLimitUpdated::class));
@@ -52,11 +45,6 @@ final class NullRateLimiterTest extends TestCase
     #[Test]
     public function throttleWorksWithDefaultLimits(): void
     {
-        $now = new DateTimeImmutable('2022-01-20 14:30:00');
-        $this->clock->expects($this->once())
-            ->method('now')
-            ->willReturn($now);
-
         $this->event_dispatcher->expects($this->once())
             ->method('dispatch')
             ->with($this->isInstanceOf(RequestRateLimitUpdated::class));
@@ -74,11 +62,6 @@ final class NullRateLimiterTest extends TestCase
     #[Test]
     public function throttleSetsCorrectResetTime(): void
     {
-        $now = new DateTimeImmutable('2022-01-20 14:30:00');
-        $this->clock->expects($this->once())
-            ->method('now')
-            ->willReturn($now);
-
         $this->event_dispatcher->expects($this->once())
             ->method('dispatch');
 
@@ -86,7 +69,7 @@ final class NullRateLimiterTest extends TestCase
 
         $result = $this->limiter->throttle($limits);
 
-        $expected_reset = new DateTimeImmutable('2022-01-20 14:31:00');
+        $expected_reset = new \DateTimeImmutable('2022-01-20 14:31:00');
         self::assertEquals($expected_reset, $result->reset_time);
     }
 }

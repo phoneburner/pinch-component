@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PhoneBurner\Pinch\Component\Http\Response\Exceptional\TransformerStrategies;
 
-use PhoneBurner\Pinch\Component\Http\Domain\ContentType;
 use PhoneBurner\Pinch\Component\Http\Domain\HttpHeader;
 use PhoneBurner\Pinch\Component\Http\Response\Exceptional\GenericHttpExceptionResponse;
 use PhoneBurner\Pinch\Component\Http\Response\Exceptional\HttpExceptionResponseTransformerStrategy;
@@ -27,7 +26,7 @@ final class TextResponseTransformerStrategy implements HttpExceptionResponseTran
         return $exception instanceof TextResponse ? $exception : new TextResponse(
             \sprintf('HTTP %s: %s', $exception->getStatusCode(), $exception->getReasonPhrase()),
             $exception->getStatusCode(),
-            [...$exception->getHeaders(), HttpHeader::CONTENT_TYPE => ContentType::TEXT],
+            $exception->withoutHeader(HttpHeader::CONTENT_TYPE)->getHeaders(),
         );
     }
 }

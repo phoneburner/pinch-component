@@ -39,6 +39,7 @@ final class JsonResponseTransformerStrategyTest extends TestCase
         $exception->method('getStatusDetail')->willReturn('The requested resource was not found');
         $exception->method('getHeaders')->willReturn(['X-Test' => ['test-value']]);
         $exception->method('getAdditional')->willReturn(['path' => '/users/123']);
+        $exception->method('withoutHeader')->with(HttpHeader::CONTENT_TYPE)->willReturn($exception);
 
         $request = $this->createMock(ServerRequestInterface::class);
 

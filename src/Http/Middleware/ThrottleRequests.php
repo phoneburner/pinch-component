@@ -20,12 +20,12 @@ use Psr\Http\Server\RequestHandlerInterface;
  * Uses injected RateLimiter to enforce per-second and per-minute limits.
  * Returns TooManyRequestsResponse with proper rate limit headers when exceeded.
  */
-final readonly class ThrottleRequests implements MiddlewareInterface
+class ThrottleRequests implements MiddlewareInterface
 {
     public function __construct(
-        private RateLimiter $rate_limiter,
-        private int $default_per_second = 10,
-        private int $default_per_minute = 60,
+        private readonly RateLimiter $rate_limiter,
+        private readonly int $default_per_second = 10,
+        private readonly int $default_per_minute = 60,
     ) {
     }
 

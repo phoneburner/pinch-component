@@ -11,7 +11,7 @@ use PhoneBurner\Pinch\Component\HttpClient\Event\HttpClientRequestCompleted;
 use PhoneBurner\Pinch\Component\HttpClient\Event\HttpClientRequestFailed;
 use PhoneBurner\Pinch\Component\HttpClient\Event\HttpClientRequestStarted;
 use PhoneBurner\Pinch\Component\HttpClient\Exception\HttpClientException;
-use PhoneBurner\Pinch\Component\HttpClient\HttpClientWrapper;
+use PhoneBurner\Pinch\Component\HttpClient\Psr18ClientWrapper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -19,17 +19,17 @@ use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Client\ClientInterface;
 
-final class HttpClientWrapperTest extends TestCase
+final class Psr18ClientWrapperTest extends TestCase
 {
     private MockObject&ClientInterface $mock_client;
     private MockObject&EventDispatcherInterface $mock_event_dispatcher;
-    private HttpClientWrapper $http_client;
+    private Psr18ClientWrapper $http_client;
 
     protected function setUp(): void
     {
         $this->mock_client = $this->createMock(ClientInterface::class);
         $this->mock_event_dispatcher = $this->createMock(EventDispatcherInterface::class);
-        $this->http_client = new HttpClientWrapper($this->mock_client, $this->mock_event_dispatcher);
+        $this->http_client = new Psr18ClientWrapper($this->mock_client, $this->mock_event_dispatcher);
     }
 
     #[Test]
@@ -37,9 +37,9 @@ final class HttpClientWrapperTest extends TestCase
     {
         $client = $this->createMock(ClientInterface::class);
         $event_dispatcher = $this->createMock(EventDispatcherInterface::class);
-        $http_client = new HttpClientWrapper($client, $event_dispatcher);
+        $http_client = new Psr18ClientWrapper($client, $event_dispatcher);
 
-        self::assertInstanceOf(HttpClientWrapper::class, $http_client);
+        self::assertInstanceOf(Psr18ClientWrapper::class, $http_client);
     }
 
     #[Test]

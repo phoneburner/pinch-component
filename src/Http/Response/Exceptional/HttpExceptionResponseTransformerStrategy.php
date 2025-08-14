@@ -10,6 +10,11 @@ use Psr\Http\Message\ServerRequestInterface;
 
 interface HttpExceptionResponseTransformerStrategy
 {
+    /**
+     * Note: we must manually remove the content-type header, because otherwise
+     * Laminas will not overwrite it with the correct value if the header keys
+     * have different cases.
+     */
     public function transform(
         HttpExceptionResponse $exception,
         ServerRequestInterface $request,

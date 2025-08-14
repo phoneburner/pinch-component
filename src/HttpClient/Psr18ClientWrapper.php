@@ -16,7 +16,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * HTTP Client that wraps another ClientInterface and emits events
  */
-final readonly class HttpClientWrapper implements HttpClient
+final readonly class Psr18ClientWrapper implements HttpClient
 {
     public function __construct(
         private ClientInterface $client,

@@ -14,6 +14,11 @@ use Psr\Http\Message\ServerRequestInterface;
 
 final class HtmlResponseTransformerStrategy implements HttpExceptionResponseTransformerStrategy
 {
+    /**
+     * Note: the content-type header has to be set separately from the other headers,
+     * because otherwise Laminas will not an overwrite an existing header with the
+     * same name but in a different case.
+     */
     public function transform(
         HttpExceptionResponse $exception,
         ServerRequestInterface $request,
@@ -22,8 +27,8 @@ final class HtmlResponseTransformerStrategy implements HttpExceptionResponseTran
         return new HtmlResponse(
             $this->render($exception, $log_trace),
             $exception->getStatusCode(),
-            [...$exception->getHeaders(), HttpHeader::CONTENT_TYPE => ContentType::HTML],
-        );
+            $exception->getHeaders(),
+        )->withHeader(HttpHeader::CONTENT_TYPE, ContentType::HTML);
     }
 
     private function render(HttpExceptionResponse $exception, LogTrace $log_trace): string
