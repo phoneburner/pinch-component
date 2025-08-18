@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Http\Stream\Iterator;
+namespace PhoneBurner\Pinch\Component\Tests\Http\Stream\Iterator;
 
 use PhoneBurner\Pinch\Component\Http\Stream\Iterator\StreamIterator;
 use PhoneBurner\Pinch\Component\Http\Stream\MemoryStream;

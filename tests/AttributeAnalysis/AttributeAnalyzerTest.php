@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AttributeAnalysis;
+namespace PhoneBurner\Pinch\Component\Tests\AttributeAnalysis;
 
 use Crell\AttributeUtils\ClassAnalyzer;
 use PhoneBurner\Pinch\Attribute\Usage\Contract;

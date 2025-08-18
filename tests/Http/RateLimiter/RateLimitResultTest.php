@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Http\RateLimiter;
+namespace PhoneBurner\Pinch\Component\Tests\Http\RateLimiter;
 
 use DateTimeImmutable;
 use PhoneBurner\Pinch\Component\Http\Domain\RateLimits;

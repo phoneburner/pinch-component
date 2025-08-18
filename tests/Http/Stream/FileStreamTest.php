@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Http\Stream;
+namespace PhoneBurner\Pinch\Component\Tests\Http\Stream;
 
 use PhoneBurner\Pinch\Component\Http\Stream\FileStream;
 use PhoneBurner\Pinch\Filesystem\FileMode;
