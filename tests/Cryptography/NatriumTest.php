@@ -76,7 +76,7 @@ final class NatriumTest extends TestCase
         $recipient_keypair = EncryptionKeyPair::import(self::KNOWN_RECIPIENT_KEYPAIR);
         $sender_keypair = EncryptionKeyPair::import(self::KNOWN_SENDER_KEYPAIR);
 
-        $ciphertext = CipherText::import(File::read(__DIR__ . '/Fixtures/lorem_X25519aegis256.txt'));
+        $ciphertext = CipherText::import(File::read(__DIR__ . '/Fixtures/lorem_x25519aegis256.txt'));
 
         $natrium = new Natrium(new KeyChain($shared_key, $recipient_keypair));
 

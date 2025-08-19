@@ -50,7 +50,7 @@ final class X25519Aegis256Test extends TestCase
         $sender_keypair = EncryptionKeyPair::import(self::KNOWN_SENDER_KEYPAIR);
         $recipient_keypair = EncryptionKeyPair::import(self::KNOWN_RECIPIENT_KEYPAIR);
 
-        $ciphertext = CipherText::import(File::read(__DIR__ . '/../../Fixtures/lorem_X25519aegis256.txt'));
+        $ciphertext = CipherText::import(File::read(__DIR__ . '/../../Fixtures/lorem_x25519aegis256.txt'));
 
         $plaintext = X25519Aegis256::decrypt($recipient_keypair, $sender_keypair->public, $ciphertext);
 
@@ -63,7 +63,7 @@ final class X25519Aegis256Test extends TestCase
     {
         $recipient_keypair = EncryptionKeyPair::import(self::KNOWN_RECIPIENT_KEYPAIR);
 
-        $ciphertext = CipherText::import(File::read(__DIR__ . '/../../Fixtures/lorem_X25519aegis256_anonymous.txt'));
+        $ciphertext = CipherText::import(File::read(__DIR__ . '/../../Fixtures/lorem_x25519aegis256_anonymous.txt'));
 
         $plaintext = X25519Aegis256::unseal($recipient_keypair, $ciphertext);
 
