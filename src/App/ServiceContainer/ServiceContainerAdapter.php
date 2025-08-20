@@ -64,6 +64,7 @@ class ServiceContainerAdapter implements ServiceContainer
         private LoggerInterface $logger = new BufferLogger(),
     ) {
         $this->auto_resolver_callback = new ReflectionMethodAutoResolver($this)(...);
+        $this->resolved[App::class] = $this->app;
     }
 
     public function setLogger(LoggerInterface $logger): void
@@ -272,7 +273,7 @@ class ServiceContainerAdapter implements ServiceContainer
                 $class_reflection->getConstructor()?->getParameters() ?? [],
             ));
 
-            $this->logger->debug(\sprintf('Service "%s" Resolved with Fallback Auto-Wiring', $id));
+            $this->logger->notice(\sprintf('Service "%s" Resolved with Fallback Auto-Wiring', $id));
 
             return $entry;
         } catch (\Throwable $e) {

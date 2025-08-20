@@ -81,4 +81,18 @@ interface App extends AutowiringContainer, MutableContainer, InvokingContainer
      * @return ($id is class-string<T> ? T : never)
      */
     public function get(\Stringable|string $id): object;
+
+    /**
+     * @template T of object
+     * @param class-string<T> $id,
+     * @param \Closure(T): void|\Closure(T): null $initializer
+     */
+    public function ghost(string $id, \Closure $initializer): void;
+
+    /**
+     * @template T of object
+     * @param class-string<T> $id,
+     * @param \Closure(T): T $factory
+     */
+    public function proxy(string $id, \Closure $factory): void;
 }

@@ -145,6 +145,7 @@ class HttpHeader
     public const string WWW_AUTHENTICATE = 'WWW-Authenticate';
     public const string X_ACCEL_BUFFERING = 'X-Accel-Buffering';
     public const string X_CONTENT_TYPE_OPTIONS = 'X-Content-Type-Options';
+    public const string X_CORRELATION_ID = 'X-Correlation-ID';
     public const string X_DNS_PREFETCH_CONTROL = 'X-DNS-Prefetch-Control';
     public const string X_FORWARDED_FOR = 'X-Forwarded-For';
     public const string X_FORWARDED_HOST = 'X-Forwarded-Host';

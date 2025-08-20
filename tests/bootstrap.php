@@ -7,12 +7,6 @@
 
 declare(strict_types=1);
 
-use PhoneBurner\Pinch\Component\Configuration\Context;
-
-if (! \defined('PhoneBurner\Pinch\Framework\CONTEXT')) {
-    \define('PhoneBurner\Pinch\Framework\CONTEXT', Context::Test);
-}
-
 if (! \defined('PhoneBurner\Pinch\UNIT_TEST_ROOT')) {
     \define('PhoneBurner\Pinch\UNIT_TEST_ROOT', __DIR__);
 }

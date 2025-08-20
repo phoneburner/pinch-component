@@ -7,6 +7,8 @@ namespace PhoneBurner\Pinch\Component\Tests\Fixtures;
 use PhoneBurner\Pinch\Component\App\App;
 use PhoneBurner\Pinch\Component\App\ServiceContainer;
 use PhoneBurner\Pinch\Component\App\ServiceContainerFactory;
+use PhoneBurner\Pinch\Component\App\ServiceFactory\GhostServiceFactory;
+use PhoneBurner\Pinch\Component\App\ServiceFactory\ProxyServiceFactory;
 use PhoneBurner\Pinch\Component\Configuration\Configuration;
 use PhoneBurner\Pinch\Component\Configuration\ConfigurationFactory;
 use PhoneBurner\Pinch\Component\Configuration\Context;
@@ -95,5 +97,25 @@ class MockApp implements App
     public static function exec(Environment $environment, callable $callback): mixed
     {
         throw new \RuntimeException('Not implemented');
+    }
+
+    /**
+     * @template T of object
+     * @param class-string<T> $id,
+     * @param \Closure(T): void|\Closure(T): null $initializer
+     */
+    public function ghost(string $id, \Closure $initializer): void
+    {
+        $this->services->set($id, new GhostServiceFactory($id, $initializer));
+    }
+
+    /**
+     * @template T of object
+     * @param class-string<T> $id,
+     * @param \Closure(T): T $factory
+     */
+    public function proxy(string $id, \Closure $factory): void
+    {
+        $this->services->set($id, new ProxyServiceFactory($id, $factory));
     }
 }

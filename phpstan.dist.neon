@@ -1,8 +1,10 @@
 includes:
     - phar://phpstan.phar/conf/bleedingEdge.neon
+    - vendor/phoneburner/pinch-phpstan/config/architecture.neon
+    - vendor/phoneburner/pinch-phpstan/config/conventions.neon
 
 parameters:
-    level: max
+    level: 8
 
     tmpDir: build/phpstan
 
