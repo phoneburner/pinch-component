@@ -17,7 +17,7 @@ parameters:
         - identifier: staticMethod.alreadyNarrowedType
         - identifier: function.alreadyNarrowedType
         - identifier: method.internalClass
-          path: 'tests/'
+        - message: '#PhoneBurner\\Pinch\\Framework\\APP_ROOT not found.$#'
 
     treatPhpDocTypesAsCertain: false
 
@@ -51,15 +51,8 @@ parameters:
     disallowedNamespaces:
         - namespace: '\DateTime'
           message: 'Use DateTimeImmutable instead'
-          allowIn:
-            - '*/tests/unit/Module/Telephony/Router/ReservationTest.php'
-
         - namespace: \Carbon\Carbon
           message: 'Use \Carbon\CarbonImmutable instead'
-          allowIn:
-            - '*/tests/unit/TestSupport/TimeStopper.php'
-            - '*/tests/unit/TestSupport/ResetCarbonTestNowAfterTests.php'
-            - '*/tests/unit/TestSupport/ResetCarbonTestNowBeforeClass.php'
 
     disallowedFunctionCalls:
         - function: 'var_dump()'
