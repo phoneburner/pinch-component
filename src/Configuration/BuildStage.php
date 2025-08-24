@@ -11,6 +11,6 @@ enum BuildStage: string
     use WithStringBackedInstanceStaticMethod;
 
     case Production = 'production';
-    case Integration = 'integration';
+    case Staging = 'staging';
     case Development = 'development';
 }

@@ -29,15 +29,15 @@ interface Environment extends ContainerInterface
         string $key,
         mixed $production = null,
         mixed $development = null,
-        mixed $integration = null,
+        mixed $staging = null,
     ): \UnitEnum|string|int|float|bool|null;
 
     public function env(
         string $key,
         mixed $production = null,
         mixed $development = null,
-        mixed $integration = null,
+        mixed $staging = null,
     ): \UnitEnum|string|int|float|bool|null;
 
-    public function match(mixed $production, mixed $development = null, mixed $integration = null): mixed;
+    public function match(mixed $production, mixed $development = null, mixed $staging = null): mixed;
 }

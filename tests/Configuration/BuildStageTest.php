@@ -63,7 +63,7 @@ final class BuildStageTest extends TestCase
     public static function buildStageValuesProvider(): \Iterator
     {
         yield 'production' => ['Production', 'production'];
-        yield 'integration' => ['Integration', 'integration'];
+        yield 'staging' => ['Staging', 'staging'];
         yield 'development' => ['Development', 'development'];
     }
 }

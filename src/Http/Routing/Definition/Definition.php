@@ -33,6 +33,13 @@ interface Definition
      */
     public function withMiddleware(string ...$middleware): self;
 
+    /**
+     * Appends the middleware classes to any existing middleware in the definition
+     *
+     * @param class-string<MiddlewareInterface> ...$middleware
+     */
+    public function withAddedMiddleware(string ...$middleware): self;
+
     public function withAttribute(string $name, mixed $value): self;
 
     /**

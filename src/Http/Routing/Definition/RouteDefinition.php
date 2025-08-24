@@ -100,17 +100,25 @@ class RouteDefinition implements Route, Definition, \JsonSerializable, PhpSerial
         return self::make($path, [HttpMethod::Delete], $attributes);
     }
 
-    public static function file(string $path, StaticFile $file): self
+    /**
+     * @param iterable<string,mixed> $attributes
+     */
+    public static function file(string $path, StaticFile $file, iterable $attributes = []): self
     {
-        return self::get($path)
+        $route = self::get($path)
             ->withHandler(StaticFileRequestHandler::class)
             ->withAttribute(StaticFile::class, $file);
+
+        return $attributes ? $route->withAddedAttributes([...$attributes]) : $route;
     }
 
-    public static function download(string $path, StaticFile $file): self
+    /**
+     * @param iterable<string,mixed> $attributes
+     */
+    public static function download(string $path, StaticFile $file, iterable $attributes = []): self
     {
-        return self::file($path, $file)
-            ->withAttribute(HttpHeader::CONTENT_DISPOSITION, 'attachment');
+        $route = self::file($path, $file)->withAttribute(HttpHeader::CONTENT_DISPOSITION, 'attachment');
+        return $attributes ? $route->withAddedAttributes([...$attributes]) : $route;
     }
 
     public static function redirect(string $path, string $uri, int $status = HttpStatus::PERMANENT_REDIRECT): self
@@ -265,6 +273,20 @@ class RouteDefinition implements Route, Definition, \JsonSerializable, PhpSerial
     public function withMiddleware(string ...$middleware): self
     {
         return $this->withAttribute(MiddlewareInterface::class, $middleware);
+    }
+
+    /**
+     * Appends the middleware classes to any existing middleware in the definition
+     *
+     * @param class-string<MiddlewareInterface> ...$middleware
+     */
+    #[\Override]
+    public function withAddedMiddleware(string ...$middleware): self
+    {
+        return $this->withAttribute(
+            MiddlewareInterface::class,
+            [...($this->attributes[MiddlewareInterface::class] ?? []), ...$middleware],
+        );
     }
 
     #[\Override]

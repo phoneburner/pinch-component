@@ -439,6 +439,47 @@ final class RouteGroupDefinitionTest extends TestCase
     }
 
     #[Test]
+    public function withAddedMiddlewareAppendsToMiddleware(): void
+    {
+        /**
+         * @var class-string<MiddlewareInterface> $existing_middleware
+         * @phpstan-ignore-next-line Intentional Defect - string is not a MiddlewareInterface
+         */
+        $existing_middleware = 'existing_middleware';
+
+        /**
+         * @var class-string<MiddlewareInterface> $new_middleware1
+         * @phpstan-ignore-next-line Intentional Defect - string is not a MiddlewareInterface
+         */
+        $new_middleware1 = 'new_middleware1';
+
+        /**
+         * @var class-string<MiddlewareInterface> $new_middleware2
+         * @phpstan-ignore-next-line Intentional Defect - string is not a MiddlewareInterface
+         */
+        $new_middleware2 = 'new_middleware2';
+
+        $sut = RouteGroupDefinition::make('', [], [
+            MiddlewareInterface::class => [$existing_middleware],
+        ]);
+
+        $sut = $sut->withRoutes(
+            /** @phpstan-ignore-next-line Intentional Defect - string is not a MiddlewareInterface */
+            RouteDefinition::get('/path1')->withMiddleware('route_middleware'),
+            RouteDefinition::all('/path2'),
+        )->withAddedMiddleware($new_middleware1, $new_middleware2);
+
+        self::assertEquals([
+            RouteDefinition::get('/path1')->withAddedAttributes([
+                MiddlewareInterface::class => [$existing_middleware, $new_middleware1, $new_middleware2, 'route_middleware'],
+            ]),
+            RouteDefinition::all('/path2')->withAddedAttributes([
+                MiddlewareInterface::class => [$existing_middleware, $new_middleware1, $new_middleware2],
+            ]),
+        ], \iterator_to_array($sut));
+    }
+
+    #[Test]
     public function withNamePrependsName(): void
     {
         $sut = RouteGroupDefinition::make('');

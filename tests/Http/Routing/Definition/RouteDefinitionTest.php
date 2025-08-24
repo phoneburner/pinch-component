@@ -384,6 +384,89 @@ final class RouteDefinitionTest extends TestCase
         ], $new->getAttributes());
     }
 
+    #[Test]
+    public function withAddedMiddlewareAppendsToExistingMiddleware(): void
+    {
+        /**
+         * @var class-string<MiddlewareInterface> $existing_middleware
+         * @phpstan-ignore-next-line Intentional Defect - string is not a MiddlewareInterface
+         */
+        $existing_middleware = 'existing_middleware';
+
+        /**
+         * @var class-string<MiddlewareInterface> $new_middleware1
+         * @phpstan-ignore-next-line Intentional Defect - string is not a MiddlewareInterface
+         */
+        $new_middleware1 = 'new_middleware1';
+
+        /**
+         * @var class-string<MiddlewareInterface> $new_middleware2
+         * @phpstan-ignore-next-line Intentional Defect - string is not a MiddlewareInterface
+         */
+        $new_middleware2 = 'new_middleware2';
+
+        $sut = RouteDefinition::make(
+            '/example',
+            [HttpMethod::Get],
+            [MiddlewareInterface::class => [$existing_middleware]],
+        );
+
+        $new = $sut->withAddedMiddleware($new_middleware1, $new_middleware2);
+        self::assertNotSame($sut, $new);
+
+        // not changed
+        self::assertSame('/example', $sut->getRoutePath());
+        self::assertSame([HttpMethod::Get->value], $sut->getMethods());
+        self::assertSame([MiddlewareInterface::class => [$existing_middleware]], $sut->getAttributes());
+
+        // changed - new middleware appended to existing
+        self::assertSame('/example', $new->getRoutePath());
+        self::assertSame([HttpMethod::Get->value], $new->getMethods());
+        self::assertSame([MiddlewareInterface::class => [
+            $existing_middleware,
+            $new_middleware1,
+            $new_middleware2,
+        ]], $new->getAttributes());
+    }
+
+    #[Test]
+    public function withAddedMiddlewareCreatesMiddlewareArrayWhenNoneExists(): void
+    {
+        /**
+         * @var class-string<MiddlewareInterface> $middleware1
+         * @phpstan-ignore-next-line Intentional Defect - string is not a MiddlewareInterface
+         */
+        $middleware1 = 'middleware1';
+
+        /**
+         * @var class-string<MiddlewareInterface> $middleware2
+         * @phpstan-ignore-next-line Intentional Defect - string is not a MiddlewareInterface
+         */
+        $middleware2 = 'middleware2';
+
+        $sut = RouteDefinition::make(
+            '/example',
+            [HttpMethod::Get],
+            ['other' => 'attribute'],
+        );
+
+        $new = $sut->withAddedMiddleware($middleware1, $middleware2);
+        self::assertNotSame($sut, $new);
+
+        // not changed
+        self::assertSame('/example', $sut->getRoutePath());
+        self::assertSame([HttpMethod::Get->value], $sut->getMethods());
+        self::assertSame(['other' => 'attribute'], $sut->getAttributes());
+
+        // changed - middleware array created
+        self::assertSame('/example', $new->getRoutePath());
+        self::assertSame([HttpMethod::Get->value], $new->getMethods());
+        self::assertSame([
+            'other' => 'attribute',
+            MiddlewareInterface::class => [$middleware1, $middleware2],
+        ], $new->getAttributes());
+    }
+
     #[DataProvider('provideChangedMethods')]
     #[Test]
     public function withMethodReplacesMethod(array $old_methods, array $new_methods, array $args): void
